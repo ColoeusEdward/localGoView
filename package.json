@@ -7,11 +7,13 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
+    "blib": "vue-tsc --noEmit && vite build --mode lib && cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\src\\components\\goView' && echo build_lib",
     "preview": "vite preview",
     "new": "plop --plopfile ./plop/plopfile.js",
     "postinstall": "husky install",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix"
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix",
+    "blbs":"vue-tsc --noEmit && vite build --mode lib && echo build_lib_server"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

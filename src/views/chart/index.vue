@@ -59,6 +59,10 @@ const ContentCharts = loadAsyncComponent(() => import('./ContentCharts/index.vue
 const ContentConfigurations = loadAsyncComponent(() => import('./ContentConfigurations/index.vue'))
 const ContentLoad = loadAsyncComponent(() => import('./ContentLoad/index.vue'))
 
+defineExpose({
+  chartEditStore
+})
+
 // 右键
 const {
   menuOptions,

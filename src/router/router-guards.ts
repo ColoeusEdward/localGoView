@@ -19,12 +19,12 @@ export function createRouterGuards(router: Router) {
       next({ name: PageEnum.ERROR_PAGE_NAME_404 })
     }
 
-    if (!loginCheck()) {
-      if (to.name === PageEnum.BASE_LOGIN_NAME) {
-        next()
-      }
-      next({ name: PageEnum.BASE_LOGIN_NAME })
-    }
+    // if (!loginCheck()) {
+    //   if (to.name === PageEnum.BASE_LOGIN_NAME) {
+    //     next()
+    //   }
+    //   next({ name: PageEnum.BASE_LOGIN_NAME })
+    // }
     next()
   })
 
