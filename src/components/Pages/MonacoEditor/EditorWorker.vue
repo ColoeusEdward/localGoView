@@ -1,14 +1,14 @@
 <template></template>
 
-<script setup>
+<script lang="ts" setup>
 import * as monaco from 'monaco-editor'
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 
-self.MonacoEnvironment = {
-  getWorker(workerId, label) {
+(self as any).MonacoEnvironment = {
+  getWorker(workerId:any, label:any) {
     if (label === 'json') {
       return new jsonWorker()
     }
