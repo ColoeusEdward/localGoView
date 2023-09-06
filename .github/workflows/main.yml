@@ -43,7 +43,7 @@ jobs:
       shell: bash
       run: ( test -d node_modules && echo "node_modules exists" || pnpm i )
     - run: pnpm build
-    # - run: cd output/app && rm -rf win-unpacked
+    - run: cd dist && rm -rf monacoeditorwork
 
     - name: Easy Zip Files
       # You may pin to the exact commit or the version.
@@ -58,11 +58,12 @@ jobs:
         # recursive: # optional, default is true
     # - run:  ( cd output/app && zip -r nsis.zip *  )
 
-    # - name: Post file to server
-    #   run: |
-    #     FILE_PATH="output/app/nsis.zip"
-    #     SERVER_URL="https://meamoe.one/koa/mv_upload/free/uploadElectron"
-    #     curl -X POST -F "files=@$FILE_PATH" $SERVER_URL
+    - run: cp dist.zip goviewDist.zip
+    - name: Post file to server
+      run: |
+        FILE_PATH="goviewDist.zip"
+        SERVER_URL="https://meamoe.one/koa/mv_upload/free/uploadTemp"
+        curl -X POST -F "files=@$FILE_PATH" $SERVER_URL
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
@@ -72,7 +73,7 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           # path: ${{ github.workspace }}/nt-web/dist
           path: |
-            ${{ github.workspace }}/dist.zip
+            ${{ github.workspace }}/dist
           # The desired behavior if no files are found using the provided path.
 
 
