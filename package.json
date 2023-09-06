@@ -22,14 +22,15 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "vue-tsc --noEmit && vite build",
-    "blib": "vue-tsc --noEmit --skipLibCheck && vite build --mode lib &&  echo build_lib",
+    "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vite build",
+    "blib": "vue-tsc --noEmit --skipLibCheck &&  vite build --mode lib &&  echo build_lib",
     "preview": "vite preview",
     "new": "plop --plopfile ./plop/plopfile.js",
     "postinstall": "husky install",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix",
-    "cp": "cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\public\\datav'"
+    "cp": "cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\public\\datav'",
+    "ea":"cd .github/workflows && start main.yml && echo edit_action"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
