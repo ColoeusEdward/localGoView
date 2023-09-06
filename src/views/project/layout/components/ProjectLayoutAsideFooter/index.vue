@@ -1,7 +1,7 @@
 <template>
   <div class="go-aside-footer">
     <n-divider class="go-mt-0"></n-divider>
-    <n-space justify="space-around">
+    <!-- <n-space justify="space-around">
       <n-tooltip v-if="collapsed" placement="right" trigger="hover">
         <template #trigger>
           <n-button secondary @click="handleDoc">
@@ -49,7 +49,7 @@
         </template>
         <n-text v-show="!collapsed">{{ $t('global.code_addr') }}</n-text>
       </n-button>
-    </n-space>
+    </n-space> -->
   </div>
 </template>
 <script setup lang="ts">

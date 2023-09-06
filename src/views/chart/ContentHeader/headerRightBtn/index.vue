@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage } from '@/utils'
+import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
 import { useRoute } from 'vue-router'
@@ -55,13 +55,38 @@ const previewHandle = () => {
   routerTurnByPath(path, [previewId], undefined, true)
 }
 
+const saveHandle = () => {
+  const { id } = routerParamsInfo.params
+  // id 标识
+  const previewId = typeof id === 'string' ? id : id[0]
+  const storageInfo = chartEditStore.getStorageInfo
+  const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+
+  if (sessionStorageInfo?.length) {
+    const repeateIndex = sessionStorageInfo.findIndex((e: { id: string }) => e.id === previewId)
+    // 重复替换
+    if (repeateIndex !== -1) {
+      sessionStorageInfo.splice(repeateIndex, 1, { id: previewId, ...storageInfo })
+      setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
+    } else {
+      sessionStorageInfo.push({
+        id: previewId,
+        ...storageInfo
+      })
+      setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
+    }
+  } else {
+    setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{ id: previewId, ...storageInfo }])
+  }
+}
+
 // 发布
 const sendHandle = () => {
   goDialog({
     message: '想体验发布功能，请前往查看: https://demo.mtruning.club/#/login。源码需切换到：master-fetch 分支。',
     positiveText: '了然',
     closeNegativeText: true,
-    onPositiveCallback: () => {}
+    onPositiveCallback: () => { }
   })
 }
 
@@ -79,12 +104,12 @@ const btnList = [
     icon: renderIcon(BrowsersOutlineIcon),
     event: previewHandle
   },
-  {
-    select: true,
-    title: '发布',
-    icon: renderIcon(SendIcon),
-    event: sendHandle
-  }
+  // {
+  //   select: true,
+  //   title: '发布',
+  //   icon: renderIcon(SendIcon),
+  //   event: sendHandle
+  // }
 ]
 
 const comBtnList = computed(() => {

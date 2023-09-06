@@ -1,19 +1,35 @@
 {
   "name": "go-view",
+  "description": "type: module",
   "version": "1.2.7",
   "engines": {
     "node": ">=12.0"
   },
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/goViewLib.js",
+  "main": "./dist/goViewLib.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/goViewLib.js",
+      "require": "./dist/goViewLib.umd.cjs"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
-    "blib": "vue-tsc --noEmit && vite build --mode lib && cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\src\\components\\goView' && echo build_lib",
+    "blib": "vue-tsc --noEmit --skipLibCheck && vite build --mode lib &&  echo build_lib",
     "preview": "vite preview",
     "new": "plop --plopfile ./plop/plopfile.js",
     "postinstall": "husky install",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix",
-    "blbs":"vue-tsc --noEmit && vite build --mode lib && echo build_lib_server"
+    "cp": "cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\public\\datav'"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -38,10 +54,10 @@
     "mitt": "^3.0.0",
     "monaco-editor": "^0.33.0",
     "naive-ui": "2.34.3",
-    "pinia": "^2.0.13",
+    "pinia": "^2.1.6",
     "screenfull": "^6.0.1",
     "three": "^0.145.0",
-    "vue": "^3.2.31",
+    "vue": "^3.3.4",
     "vue-demi": "^0.13.1",
     "vue-i18n": "^9.2.2",
     "vue-router": "4.0.12",
@@ -60,9 +76,9 @@
     "@typescript-eslint/parser": "^5.18.0",
     "@vicons/carbon": "^0.12.0",
     "@vicons/ionicons5": "~0.11.0",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "@vue/compiler-sfc": "^3.2.31",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "@vue/compiler-sfc": "^3.3.4",
     "@vueuse/core": "^7.7.1",
     "commitlint": "^17.0.2",
     "default-passive-events": "^2.0.0",
@@ -80,12 +96,12 @@
     "sass": "^1.49.11",
     "sass-loader": "^12.6.0",
     "typescript": "4.6.3",
-    "vite": "4.3.6",
+    "vite": "4.4.9",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-importer": "^0.2.5",
-    "vite-plugin-mock": "^2.9.6",
+    "vite-plugin-mock": "^2.9.8",
     "vite-plugin-monaco-editor": "^1.1.0",
     "vue-echarts": "^6.0.2",
-    "vue-tsc": "^0.28.10"
+    "vue-tsc": "^1.8.8"
   }
 }

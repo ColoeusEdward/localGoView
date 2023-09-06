@@ -4,8 +4,7 @@
     :hljs="hljsTheme"
     :locale="locale"
     :date-locale="dateLocale"
-    :theme-overrides="overridesTheme"
-  >
+    :theme-overrides="overridesTheme">
     <go-app-provider>
       <I18n></I18n>
       <router-view></router-view>
@@ -18,6 +17,8 @@ import { NConfigProvider } from 'naive-ui'
 import { GoAppProvider } from '@/components/GoAppProvider'
 import { I18n } from '@/components/I18n'
 import { useDarkThemeHook, useThemeOverridesHook, useCode, useLang } from '@/hooks'
+import { useDbStore } from './store/modules/dbStore/dbStore';
+import { StorageEnum } from '@/enums/storageEnum';
 
 // 暗黑主题
 const darkTheme = useDarkThemeHook()
@@ -30,5 +31,17 @@ const hljsTheme = useCode()
 
 // 全局语言
 const { locale, dateLocale } = useLang()
+
+//开启indexedDb
+const dbStore = useDbStore()
+dbStore.initDb().then((db: any) => {
+
+  let transaction = db.transaction([StorageEnum.DB_DATAV_NAME])
+  var objectStore = transaction.objectStore(StorageEnum.DB_DATAV_NAME)
+  var request = objectStore.getAll()
+  request.onsuccess = function (event: any) {
+    console.log("🚀 ~ file: App.vue:41 ~ dbStore.initDb ~ test:", event.target.result)
+  }
+})
 
 </script>

@@ -42,7 +42,7 @@
           <!-- 工具 -->
           <n-space>
             <n-text>
-              <n-badge
+              <!-- <n-badge
                 class="go-animation-twinkle"
                 dot
                 :color="cardData?.release ? '#34c749' : '#fcbc40'"
@@ -51,7 +51,7 @@
                 cardData?.release
                   ? $t('project.release')
                   : $t('project.unreleased')
-              }}
+              }} -->
             </n-text>
 
             <template v-for="item in fnBtnList" :key="item.key">

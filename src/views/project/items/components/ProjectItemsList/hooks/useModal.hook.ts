@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { ChartEnum } from '@/enums/pageEnum'
+import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
 import { fetchPathByName, routerTurnByPath } from '@/utils'
 import { Chartype } from '../../../index.d'
 
@@ -27,11 +27,20 @@ export const useModalDataInit = () => {
     routerTurnByPath(path, [cardData.id], undefined, true)
   }
 
+  //预览model
+  const previewHandle = (cardData: Chartype) => {
+    console.log("🚀 ~ file: useModal.hook.ts:32 ~ previewHandle ~ cardData:", cardData)
+    if(!cardData) return
+    const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'href')
+    routerTurnByPath(path, [cardData.id], undefined, true)
+  }
+
   return {
     modalData,
     modalShow,
     closeModal,
     resizeHandle,
-    editHandle
+    editHandle,
+    previewHandle
   }
 }

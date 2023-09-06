@@ -14,7 +14,7 @@ export const groupTitle = "分组"
 // 主题配置
 export const theme = {
   // 默认是否开启深色主题
-  darkTheme: true,
+  darkTheme: false,
   //默认主题色
   appTheme: '#51d6a9',
   appThemeDetail: null,

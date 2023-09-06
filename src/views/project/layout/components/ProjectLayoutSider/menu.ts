@@ -68,19 +68,19 @@ export const menuOptionsInit = () => {
       key: 'divider-2',
       type: 'divider',
     },
-    {
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: {
-              name: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
-            },
-          },
-          { default: () => t('project.template_market') }
-        ),
-      key: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
-      icon: renderIcon(StoreIcon),
-    },
+    // {
+    //   label: () =>
+    //     h(
+    //       RouterLink,
+    //       {
+    //         to: {
+    //           name: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
+    //         },
+    //       },
+    //       { default: () => t('project.template_market') }
+    //     ),
+    //   key: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
+    //   icon: renderIcon(StoreIcon),
+    // },
   ])
 }
