@@ -84,7 +84,7 @@ const btnHandle = (key: string) => {
   closeHandle()
   const id = getUUID()
   const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-  routerTurnByPath(path, [id], undefined, true)
+  routerTurnByPath(path, [id], undefined, false)
 }
 </script>
 <style lang="scss" scoped>

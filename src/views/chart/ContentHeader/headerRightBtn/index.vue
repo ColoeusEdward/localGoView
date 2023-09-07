@@ -20,6 +20,7 @@ import { syncData } from '../../ContentEdit/components/EditTools/hooks/useSyncUp
 import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
+import { Chartype } from '@/views/project/items/index'
 
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, SaveIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
@@ -62,7 +63,15 @@ const saveHandle = () => {
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
   const storageInfo = chartEditStore.getStorageInfo
-  // dbObjectStore
+  const sdata: Chartype = {
+    id: previewId,
+    title:document.title,
+    label:'',
+    release:false,
+    info: storageInfo,
+  }
+  console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
+  // dbObjectStore.put
   // let keyRange = IDBKeyRange.only(previewId);
   // let getReq = dbObjectStore.getAll(keyRange)
   // getReq.onsuccess = (e:any) => {
