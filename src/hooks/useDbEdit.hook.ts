@@ -10,7 +10,7 @@ export const useDbEdit = (key: string, onlyRead?: boolean) => {
     dbOverPromise: <Promise<any> | null>null
   })
   const dbStore = useDbStore()
-  return checkUtil(() => dbStore.db)
+  return checkUtil(() => dbStore.db,50)
     .then(() => {
       transaction = dbStore.db.transaction([key], onlyRead ? "readonly" : "readwrite");
       dbObj.dbObjectStore = transaction.objectStore(key);

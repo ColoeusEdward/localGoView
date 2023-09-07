@@ -1,4 +1,4 @@
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ResultEnum } from '@/enums/httpEnum'
 import { ErrorPageNameMap, PageEnum } from '@/enums/pageEnum'
 import { docPath, giteeSourceCodePath } from '@/settings/pathConst'
@@ -77,7 +77,7 @@ export const routerTurnByPath = (
     return
   }
   router.push({
-    path: fullPath,
+    path: fullPath.replace('#',''),
   })
 }
 
