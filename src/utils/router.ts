@@ -72,7 +72,7 @@ export const routerTurnByPath = (
   }
   if (isReplace) {
     router.replace({
-      path: fullPath,
+      path: fullPath.replace('#',''),
     })
     return
   }

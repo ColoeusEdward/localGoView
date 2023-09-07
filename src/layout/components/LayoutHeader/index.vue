@@ -15,6 +15,7 @@
           <!-- <go-lang-select></go-lang-select> -->
           <theme-color-select></theme-color-select>
           <go-theme-select></go-theme-select>
+          <CloseWindow ></CloseWindow>
           <slot name="ri-right"> </slot>
         </n-space>
       </div>
@@ -29,6 +30,7 @@ import { GoThemeSelect } from '@/components/GoThemeSelect'
 import { GoLangSelect } from '@/components/GoLangSelect'
 import { ThemeColorSelect } from '@/components/Pages/ThemeColorSelect'
 import { PageEnum } from '@/enums/pageEnum'
+import CloseWindow from '@/components/CloseWindow'
 
 const route = useRoute()
 

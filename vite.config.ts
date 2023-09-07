@@ -5,6 +5,7 @@ import { OUTPUT_DIR, brotliSize, chunkSizeWarningLimit, terserOptions, rollupOpt
 import viteCompression from 'vite-plugin-compression'
 import { viteMockServe } from 'vite-plugin-mock'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -41,6 +42,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       vue(),
+      vueJsx(),
       // (mode == 'lib' ? (monacoEditorPlugin as any).default : monacoEditorPlugin)
       monacoEditorPlugin({
         languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html']
