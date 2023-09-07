@@ -24,7 +24,7 @@ import { Chartype } from '@/views/project/items/index'
 
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, SaveIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
-const dbObj = useDbEdit('datav')
+const dbObjPromise = useDbEdit('datav')
 
 const routerParamsInfo = useRoute()
 
@@ -65,9 +65,9 @@ const saveHandle = () => {
   const storageInfo = chartEditStore.getStorageInfo
   const sdata: Chartype = {
     id: previewId,
-    title:document.title,
-    label:'',
-    release:false,
+    title: document.title,
+    label: '',
+    release: false,
     info: storageInfo,
   }
   console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
@@ -81,8 +81,9 @@ const saveHandle = () => {
   //     // 保存到本地
   //   }
   // }
-
-  dbObj.dbOverPromise?.then((res) => {
+  dbObjPromise.then((dbObj) => {
+    return dbObj.dbOverPromise
+  }).then((res) => {
     console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
     if (res.target.result) {
 

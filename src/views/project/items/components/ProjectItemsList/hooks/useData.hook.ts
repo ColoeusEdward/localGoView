@@ -37,16 +37,19 @@ export const useDataListInit = () => {
       label: '官方案例'
     }
   ])
-  const dbObj = useDbEdit('datav')
-  let getReq = dbObj.dbObjectStore.getAll()
-  getReq.onsuccess = (e: any) => {
-    const res = e.target.result
-    console.log("🚀 ~ file: index.vue:69 ~ saveHandle ~ res:", res)
-    if (res) {
-      // 保存到本地
-      list.value = res
+  const dbObjPromise = useDbEdit('datav')
+  dbObjPromise.then((dbObj) => {
+    let getReq = dbObj.dbObjectStore.getAll()
+    getReq.onsuccess = (e: any) => {
+      const res = e.target.result
+      console.log("🚀 ~ file: index.vue:69 ~ saveHandle ~ res:", res)
+      if (res) {
+        // 保存到本地
+        list.value = res
+      }
     }
-  }
+  })
+
 
 
   // 删除
