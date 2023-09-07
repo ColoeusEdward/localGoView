@@ -353,3 +353,12 @@ export const JSONParse = (data: string) => {
 export const setTitle = (title?: string) => {
   title && (document.title = title)
 }
+
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const checkUtil = async (checkFn:Function,ms:number=100) => {
+  while(!checkFn()){
+    await sleep(ms)
+  }
+  return checkFn()
+}

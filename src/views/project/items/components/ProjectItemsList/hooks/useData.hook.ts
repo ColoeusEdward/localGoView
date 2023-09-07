@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { goDialog } from '@/utils'
+import { checkUtil, goDialog } from '@/utils'
 import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList } from '../../..'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
