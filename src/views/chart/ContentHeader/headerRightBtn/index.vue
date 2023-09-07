@@ -19,9 +19,11 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 import { syncData } from '../../ContentEdit/components/EditTools/hooks/useSyncUpdate.hook'
 import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash'
+import { useDbEdit } from '@/hooks/useDbEdit.hook'
 
-const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon } = icon.ionicons5
+const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, SaveIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
+const { dbObjectStore, dbOverPromise } = useDbEdit('datav')
 
 const routerParamsInfo = useRoute()
 
@@ -60,24 +62,43 @@ const saveHandle = () => {
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
   const storageInfo = chartEditStore.getStorageInfo
-  const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+  // dbObjectStore
+  // let keyRange = IDBKeyRange.only(previewId);
+  // let getReq = dbObjectStore.getAll(keyRange)
+  // getReq.onsuccess = (e:any) => {
+  //   const res = e.target.result
+  //   console.log("🚀 ~ file: index.vue:69 ~ saveHandle ~ res:", res)
+  //   if (res) {
+  //     // 保存到本地
+  //   }
+  // }
 
-  if (sessionStorageInfo?.length) {
-    const repeateIndex = sessionStorageInfo.findIndex((e: { id: string }) => e.id === previewId)
-    // 重复替换
-    if (repeateIndex !== -1) {
-      sessionStorageInfo.splice(repeateIndex, 1, { id: previewId, ...storageInfo })
-      setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
+  dbOverPromise.then((res) => {
+    console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
+    if (res.target.result) {
+
     } else {
-      sessionStorageInfo.push({
-        id: previewId,
-        ...storageInfo
-      })
-      setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
+
     }
-  } else {
-    setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{ id: previewId, ...storageInfo }])
-  }
+  })
+  // const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+
+  // if (sessionStorageInfo?.length) {
+  //   const repeateIndex = sessionStorageInfo.findIndex((e: { id: string }) => e.id === previewId)
+  //   // 重复替换
+  //   if (repeateIndex !== -1) {
+  //     sessionStorageInfo.splice(repeateIndex, 1, { id: previewId, ...storageInfo })
+  //     setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
+  //   } else {
+  //     sessionStorageInfo.push({
+  //       id: previewId,
+  //       ...storageInfo
+  //     })
+  //     setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
+  //   }
+  // } else {
+  //   setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{ id: previewId, ...storageInfo }])
+  // }
 }
 
 // 发布
@@ -103,6 +124,12 @@ const btnList = [
     title: '预览',
     icon: renderIcon(BrowsersOutlineIcon),
     event: previewHandle
+  },
+  {
+    select: true,
+    title: '保存',
+    icon: renderIcon(SaveIcon),
+    event: saveHandle
   },
   // {
   //   select: true,

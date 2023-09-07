@@ -4,20 +4,24 @@ import { dbStateType } from './dbStore.d'
 import { setLocalStorage, getLocalStorage, reloadRoutePage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 
-const { GO_LANG_STORE } = StorageEnum
+const { GO_LANG_STORE, ROOT_PATH_KEY } = StorageEnum
 const storageLang: dbStateType = getLocalStorage(GO_LANG_STORE)
-
+const storageRootPath: dbStateType['rootPath'] = getLocalStorage(ROOT_PATH_KEY)
 // 语言
 export const useDbStore = defineStore({
   id: 'useDbStore',
   state: (): dbStateType =>
     storageLang || {
       db: null,
-      dbReq: null
+      dbReq: null,
+      rootPath: storageRootPath || '',  //项目根目录路径
     },
   getters: {
     getDb(): any {
       return this.db
+    },
+    getRootPath(): dbStateType['rootPath'] {
+      return this.rootPath
     }
   },
   actions: {
@@ -36,6 +40,6 @@ export const useDbStore = defineStore({
           resolve(db)
         }
       })
-    }
+    },
   }
 })

@@ -68,7 +68,8 @@ import {
   EyeOffOutline as EyeOffOutlineIcon,
   Albums as AlbumsIcon,
   Analytics as AnalyticsIcon,
-  AirplaneOutline as AirPlaneOutlineIcon
+  AirplaneOutline as AirPlaneOutlineIcon,
+  Save as SaveIcon
 } from '@vicons/ionicons5'
 
 import {
@@ -244,7 +245,9 @@ const ionicons5 = {
   // 分析
   AnalyticsIcon,
   // 飞机
-  AirPlaneOutlineIcon
+  AirPlaneOutlineIcon,
+  //保存
+  SaveIcon
 }
 
 const carbon = {

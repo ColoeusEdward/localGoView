@@ -173,6 +173,7 @@ export const fetchRouteParams = () => {
  */
 export const goHome = () => {
   routerTurnByName(PageEnum.BASE_HOME_NAME)
+  // window.ipc.send('closeWin')
 }
 
 /**

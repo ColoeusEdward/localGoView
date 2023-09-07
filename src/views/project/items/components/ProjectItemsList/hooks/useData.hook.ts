@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { goDialog } from '@/utils'
 import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList } from '../../..'
+import { useDbEdit } from '@/hooks/useDbEdit.hook'
 // 数据初始化
 export const useDataListInit = () => {
   const list = ref<ChartList>([
@@ -36,6 +37,17 @@ export const useDataListInit = () => {
       label: '官方案例'
     }
   ])
+  const { dbObjectStore, dbOverPromise } = useDbEdit('datav')
+  let getReq = dbObjectStore.getAll()
+  getReq.onsuccess = (e: any) => {
+    const res = e.target.result
+    console.log("🚀 ~ file: index.vue:69 ~ saveHandle ~ res:", res)
+    if (res) {
+      // 保存到本地
+      list.value = res
+    }
+  }
+
 
   // 删除
   const deleteHandle = (cardData: object, index: number) => {

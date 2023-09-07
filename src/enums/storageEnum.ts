@@ -17,5 +17,10 @@ export enum StorageEnum {
   GO_USER_MEDIA_PHOTOS = 'GO_USER_MEDIA_PHOTOS',
 
   //数据库大屏表名
-  DB_DATAV_NAME = 'datav'
+  DB_DATAV_NAME = 'datav',
+
+  //根目录路径
+  ROOT_PATH_KEY = 'rootPath',
+  //自定义文件协议名
+  FILE_PROTOCOL_HEAD = 'mygo:///',
 }
