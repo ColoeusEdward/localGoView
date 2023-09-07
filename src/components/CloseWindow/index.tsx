@@ -8,6 +8,7 @@ export default defineComponent({
   setup(props, ctx) {
     const close = () => {
       window.ipc.send('closeWin')
+      window.close()
     }
     const prop:any={
       title:'关闭'
