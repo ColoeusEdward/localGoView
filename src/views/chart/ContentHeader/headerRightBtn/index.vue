@@ -24,7 +24,7 @@ import { Chartype } from '@/views/project/items/index'
 
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, SaveIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
-const { dbObjectStore, dbOverPromise } = useDbEdit('datav')
+const dbObj = useDbEdit('datav')
 
 const routerParamsInfo = useRoute()
 
@@ -82,7 +82,7 @@ const saveHandle = () => {
   //   }
   // }
 
-  dbOverPromise.then((res) => {
+  dbObj.dbOverPromise?.then((res) => {
     console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
     if (res.target.result) {
 
