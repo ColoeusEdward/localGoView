@@ -44,9 +44,12 @@ dbStore.initDb().then((db: any) => {
   }
 })
 
-console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:")
-window.ipc.invoke('getRootPath').then((res: string) => {
-  console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:", res)
-})
+if (window.ipc) {
+  console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:")
+  window.ipc.invoke('getRootPath').then((res: string) => {
+    console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:", res)
+  })
+}
+
 
 </script>

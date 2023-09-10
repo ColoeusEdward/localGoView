@@ -1,12 +1,12 @@
 <template>
   <!-- 每个小模块的公共样式 -->
-  <div class="go-content-box" :class="[`bg-depth${depth}`, flex && 'flex']">
+  <div class="go-content-box" :class="[`bg-depth${depth}`, flex && 'flex1']">
     <div v-if="showTop" class="top go-mt-0 go-flex-no-wrap">
       <n-space class="go-flex-no-wrap" :size="5">
         <n-ellipsis>
           <n-text>{{ title }}</n-text>
         </n-ellipsis>
-        <div class="mt-1">
+        <div class="go-mt-1">
           <slot name="icon"></slot>
         </div>
       </n-space>
@@ -139,7 +139,7 @@ $topOrBottomHeight: 40px;
     }
   }
 
-  &.flex {
+  &.flex1 {
     flex: 1;
   }
 
@@ -154,7 +154,7 @@ $topOrBottomHeight: 40px;
     border-top: 1px solid;
     @include fetch-border-color('hover-border-color');
 
-    .mt-1 {
+    .go-mt-1 {
       margin-top: 2px;
     }
   }

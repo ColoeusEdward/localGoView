@@ -191,4 +191,8 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  corePlugins: {
+    content:false
+  },
+  
 };
