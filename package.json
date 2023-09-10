@@ -23,7 +23,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vite build",
-    "bw":"vue-tsc --noEmit && vite build && echo build_win",
+    "bw": "vue-tsc --noEmit && vite build && echo build_win",
+    "ob":"git push origin2",
     "blib": "vue-tsc --noEmit --skipLibCheck &&  vite build --mode lib &&  echo build_lib",
     "preview": "vite preview",
     "new": "plop --plopfile ./plop/plopfile.js",
@@ -31,7 +32,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix",
     "cp": "cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\public\\datav'",
-    "ea":"cd .github/workflows && start main.yml && echo edit_action"
+    "ea": "cd .github/workflows && start main.yml && echo edit_action"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -82,6 +83,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "@vue/compiler-sfc": "^3.3.4",
     "@vueuse/core": "^7.7.1",
+    "autoprefixer": "^10.4.15",
     "commitlint": "^17.0.2",
     "default-passive-events": "^2.0.0",
     "echarts": "^5.3.2",
@@ -94,9 +96,11 @@
     "lodash": "~4.17.21",
     "mockjs": "^1.1.0",
     "plop": "^3.0.5",
+    "postcss": "^8.4.29",
     "prettier": "^2.6.2",
     "sass": "^1.49.11",
     "sass-loader": "^12.6.0",
+    "tailwindcss": "^3.3.3",
     "typescript": "4.6.3",
     "vite": "4.4.9",
     "vite-plugin-compression": "^0.5.1",

@@ -7,7 +7,10 @@ export default defineComponent({
   name: 'CloseWindow',
   setup(props, ctx) {
     const close = () => {
-      window.ipc.send('closeWin')
+      // window.ipc.send('closeWin')
+      window.ipc.invoke('getRootPath').then((res:string) => {
+          console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:", res)
+      })
       window.close()
     }
     const prop:any={
@@ -15,9 +18,9 @@ export default defineComponent({
     }
     return () => {
       return (
-        <NButton quaternary onClick={close} {...prop} >
-          <NIcon size="20" depth="1">
-            <CloseIcon />
+        <NButton quaternary onClick={close} {...prop} class={''} >
+          <NIcon size="20" depth="1" >
+            <CloseIcon class={' text-red-500'} />
           </NIcon>
         </NButton>
       )
