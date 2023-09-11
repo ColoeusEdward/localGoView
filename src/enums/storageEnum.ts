@@ -23,4 +23,6 @@ export enum StorageEnum {
   ROOT_PATH_KEY = 'rootPath',
   //自定义文件协议名
   FILE_PROTOCOL_HEAD = 'mygo:///',
+  //preview pic file path
+  PREVIEW_PIC_PATH = '/resource/pic/project',
 }

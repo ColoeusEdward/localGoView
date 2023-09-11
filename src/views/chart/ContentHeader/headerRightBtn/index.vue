@@ -60,6 +60,7 @@ const previewHandle = () => {
 }
 
 const saveHandle = () => {
+  saveLoading.value = true
   const { id } = routerParamsInfo.params
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
@@ -67,7 +68,6 @@ const saveHandle = () => {
   // 导出图片
   const range = document.querySelector('.go-edit-range') as HTMLElement
   let picName = ''
-  saveLoading.value = true
   let val = { blob:<Blob|null> null, name: '' }
   let val2 = { blob:<ArrayBuffer|undefined> undefined, name: '' }
   new Promise<typeof val>((resolve, reject) => {
@@ -115,6 +115,9 @@ const saveHandle = () => {
     } else {
 
     }
+  })
+  .catch((e) => {
+    window['$message'].error('保存失败，请联系程序人员查找原因')
   })
   .finally(() => {
     saveLoading.value = false

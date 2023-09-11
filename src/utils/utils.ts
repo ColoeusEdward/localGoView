@@ -11,6 +11,8 @@ import { WinKeyboard } from '@/enums/editPageEnum'
 import { RequestHttpIntervalEnum, RequestParamsObjType } from '@/enums/httpEnum'
 import { CreateComponentType, CreateComponentGroupType } from '@/packages/index.d'
 import { excludeParseEventKeyList, excludeParseEventValueList } from '@/enums/eventEnum'
+import { StorageEnum } from '@/enums/storageEnum'
+import { useDbStore } from '@/store/modules/dbStore/dbStore'
 
 /**
  * * 判断是否是开发环境
@@ -381,4 +383,12 @@ export const checkUtil = async (checkFn: Function, ms: number = 100) => {
     await sleep(ms)
   }
   return checkFn()
+}
+
+export const getPreviewPicUrl = (name: string) => {
+  if(!name) return ''
+  const { FILE_PROTOCOL_HEAD, PREVIEW_PIC_PATH } = StorageEnum
+  const dbStore = useDbStore()
+  const rootPath = dbStore.getRootPath
+  return `${FILE_PROTOCOL_HEAD}${rootPath}${PREVIEW_PIC_PATH}/${name}`
 }

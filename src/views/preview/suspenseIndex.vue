@@ -30,7 +30,7 @@
 import { computed } from 'vue'
 import { PreviewRenderList } from './components/PreviewRenderList'
 import { getFilterStyle, setTitle } from '@/utils'
-import { getEditCanvasConfigStyle, getSessionStorageInfo, keyRecordHandle, dragCanvas } from './utils'
+import { getEditCanvasConfigStyle, getSessionStorageInfo, keyRecordHandle, dragCanvas, getIndexedStorageInfo } from './utils'
 import { useComInstall } from './hooks/useComInstall.hook'
 import { useScale } from './hooks/useScale.hook'
 import { useStore } from './hooks/useStore.hook'
@@ -40,7 +40,8 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
 
-await getSessionStorageInfo()
+// await getSessionStorageInfo()
+await getIndexedStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)

@@ -44,8 +44,10 @@ import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { useChartHistoryStore } from '@/store/modules/chartHistoryStore/chartHistoryStore'
+import { getIndexedStorageInfo } from '../preview/utils'
 
 const chartHistoryStoreStore = useChartHistoryStore()
+await getIndexedStorageInfo()
 const chartEditStore = useChartEditStore()
 
 // 记录初始化

@@ -16,7 +16,7 @@
             object-fit="contain"
             height="180"
             preview-disabled
-            :src="requireUrl('project/moke-20211219181327.png')
+            :src="getPreviewPicUrl(cardData.pic!) || requireUrl('project/moke-20211219181327.png')
               "
             :alt="cardData.title"
             :fallback-src="requireErrorImg()"></n-image>
@@ -80,11 +80,12 @@
 
 <script setup lang="ts">
 import { reactive, ref, PropType } from 'vue'
-import { renderIcon, renderLang, requireErrorImg } from '@/utils'
+import { renderIcon, renderLang, requireErrorImg, getPreviewPicUrl } from '@/utils'
 import { icon } from '@/plugins'
 import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
 import { Chartype } from '../../index.d'
 import { log } from 'console'
+
 const {
   EllipsisHorizontalCircleSharpIcon,
   CopyIcon,
@@ -96,7 +97,7 @@ const {
   SendIcon
 } = icon.ionicons5
 
-const emit = defineEmits(['delete', 'resize', 'edit','preview'])
+const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
@@ -226,4 +227,5 @@ $contentHeight: 180px;
       min-width: 180px;
     }
   }
-}</style>
+}
+</style>
