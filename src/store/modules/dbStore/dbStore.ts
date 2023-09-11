@@ -15,7 +15,6 @@ export const useDbStore = defineStore({
   state: (): dbStateType =>
     storageLang || {
       db: null,
-
       dbReq: null,
       rootPath: storageRootPath || '',  //项目根目录路径
     },
@@ -24,6 +23,7 @@ export const useDbStore = defineStore({
       return this.db
     },
     getRootPath(): dbStateType['rootPath'] {
+      console.log("🚀 ~ file: dbStore.ts:27 ~ getRootPath ~ this.rootPath:", this.rootPath)
       return this.rootPath
     },
     getDbPromise(): Promise<any> {
