@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, toRaw } from 'vue'
 import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage, canvasCut2 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
@@ -101,11 +101,11 @@ const saveHandle = () => {
       label: '',
       release: false,
       pic: picName,
-      info: storageInfo,
+      info: toRaw(storageInfo),
     }
     console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
     const dbObjectStore = dbObj?.dbObjectStore
-    dbObjectStore.put(structuredClone(sdata))
+    dbObjectStore.put(sdata)
     return dbObj?.dbOverPromise
   }).then((res) => {
     console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
