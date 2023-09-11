@@ -20,7 +20,7 @@ export const setLocalStorage = <T>(k: string, v: T) => {
  * @returns any
  */
 export const getLocalStorage = (k: string) => {
-  const item = window.localStorage.getItem(k)
+  const item = window.localStorage.getItem(k) || ''
   console.log("🚀 ~ file: storage.ts:24 ~ getLocalStorage ~ item:", item)
   let res = item
   if(typeof item == 'object' && !Array.isArray(item) && item != null){
