@@ -3,6 +3,8 @@ import { lang } from '@/settings/designSetting'
 import { dbStateType } from './dbStore.d'
 import { setLocalStorage, getLocalStorage, reloadRoutePage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
+import { watch } from 'vue'
+import { watchOnce } from '@vueuse/core'
 
 const { GO_LANG_STORE, ROOT_PATH_KEY } = StorageEnum
 const storageLang: dbStateType = getLocalStorage(GO_LANG_STORE)
@@ -13,6 +15,7 @@ export const useDbStore = defineStore({
   state: (): dbStateType =>
     storageLang || {
       db: null,
+
       dbReq: null,
       rootPath: storageRootPath || '',  //项目根目录路径
     },
@@ -22,6 +25,17 @@ export const useDbStore = defineStore({
     },
     getRootPath(): dbStateType['rootPath'] {
       return this.rootPath
+    },
+    getDbPromise(): Promise<any> {
+      return new Promise((resolve) => {
+        if (!this.db) {
+          watchOnce(() => this.db, (db) => {
+            resolve(db)
+          }, {})
+        }else{
+          resolve(this.db)
+        }
+      })
     }
   },
   actions: {

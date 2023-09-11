@@ -1,6 +1,6 @@
 import { useDbStore } from "@/store/modules/dbStore/dbStore";
 import { checkUtil, sleep } from "@/utils";
-import { onMounted, reactive } from "vue";
+import { computed, onMounted, reactive } from "vue";
 
 // * code 展示
 export const useDbEdit = (key: string, onlyRead?: boolean) => {
@@ -10,8 +10,7 @@ export const useDbEdit = (key: string, onlyRead?: boolean) => {
     dbOverPromise: <Promise<any> | null>null
   })
   const dbStore = useDbStore()
-  return checkUtil(() => dbStore.db,50)
-    .then(() => {
+  return dbStore.getDbPromise.then(() => {
       transaction = dbStore.db.transaction([key], onlyRead ? "readonly" : "readwrite");
       dbObj.dbObjectStore = transaction.objectStore(key);
       dbObj.dbOverPromise = new Promise<any>((resolve, reject) => {

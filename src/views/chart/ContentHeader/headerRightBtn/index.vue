@@ -101,7 +101,7 @@ const saveHandle = () => {
       label: '',
       release: false,
       pic: picName,
-      info: toRaw(storageInfo),
+      info: JSON.parse(JSON.stringify(storageInfo)),
     }
     console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
     const dbObjectStore = dbObj?.dbObjectStore
