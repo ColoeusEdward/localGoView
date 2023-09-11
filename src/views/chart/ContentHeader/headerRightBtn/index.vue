@@ -80,10 +80,11 @@ const saveHandle = () => {
     return val.blob?.arrayBuffer()
   }).then((buffer) => {
     val2.blob = buffer
+    val2.name = picName
   })
   .then((val) => {
-    console.log("🚀 ~ file: index.vue:77 ~ newPromise ~ val:", val)
-    return window.ipc.invoke('savePreviewPic', val)
+    console.log("🚀 ~ file: index.vue:77 ~ newPromise ~ val:", val2)
+    return window.ipc.invoke('savePreviewPic', val2)
   })
   // .then((res) => {
   //   // window['$message'].success('保存成功！')
