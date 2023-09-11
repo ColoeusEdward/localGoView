@@ -195,6 +195,26 @@ export const canvasCut = (html: HTMLElement | null, callback?: Function) => {
   })
 }
 
+//截取为blob文件
+export const canvasCut2 = (html: HTMLElement | null, callback?: Function) => {
+  if (!html) {
+    window['$message'].error('导出失败！')
+    if (callback) callback()
+    return
+  }
+
+  html2canvas(html, {
+    backgroundColor: null,
+    allowTaint: true,
+    useCORS: true
+  }).then((canvas: HTMLCanvasElement) => {
+    window['$message'].success('导出成功！')
+    canvas.toBlob((blob) => {
+      if (callback) callback(blob)
+    }, 'image/png')
+  })
+}
+
 /**
  * * 函数过滤器
  * @param data 数据值
@@ -356,8 +376,8 @@ export const setTitle = (title?: string) => {
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const checkUtil = async (checkFn:Function,ms:number=100) => {
-  while(!checkFn()){
+export const checkUtil = async (checkFn: Function, ms: number = 100) => {
+  while (!checkFn()) {
     await sleep(ms)
   }
   return checkFn()

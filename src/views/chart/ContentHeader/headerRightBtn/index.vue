@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage } from '@/utils'
+import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage, canvasCut2 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
 import { useRoute } from 'vue-router'
@@ -22,9 +22,10 @@ import { cloneDeep } from 'lodash'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
 import { Chartype } from '@/views/project/items/index'
 
+
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, SaveIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
-const dbObjPromise = useDbEdit('datav')
+// const dbObj = useDbEdit('datav')
 
 const routerParamsInfo = useRoute()
 
@@ -63,14 +64,46 @@ const saveHandle = () => {
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
   const storageInfo = chartEditStore.getStorageInfo
-  const sdata: Chartype = {
-    id: previewId,
-    title: document.title,
-    label: '',
-    release: false,
-    info: storageInfo,
-  }
-  console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
+  // 导出图片
+  const range = document.querySelector('.go-edit-range') as HTMLElement
+  let picName = ''
+  new Promise((resolve, reject) => {
+    canvasCut2(range, (blob: Blob) => {
+      picName = previewId + '.png'
+      let val = { blob, name: picName }
+      resolve(val)
+    })
+  }).then((val) => {
+    return window.ipc.invoke('savePreviewPic', val)
+  }).then((res) => {
+    // window['$message'].success('保存成功！')
+    if (!res) return
+
+    return useDbEdit('datav')
+  }).then((dbObj) => {
+    const sdata: Chartype = {
+      id: previewId,
+      title: document.title,
+      label: '',
+      release: false,
+      pic: picName,
+      info: storageInfo,
+    }
+    console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
+    const dbObjectStore = dbObj?.dbObjectStore
+    dbObjectStore.put(sdata)
+    return dbObj?.dbOverPromise
+  }).then((res) => {
+    console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
+    window['$message'].success('保存成功！')
+    if (res.target.result) {
+
+    } else {
+
+    }
+  })
+
+
   // dbObjectStore.put
   // let keyRange = IDBKeyRange.only(previewId);
   // let getReq = dbObjectStore.getAll(keyRange)
@@ -81,16 +114,7 @@ const saveHandle = () => {
   //     // 保存到本地
   //   }
   // }
-  dbObjPromise.then((dbObj) => {
-    return dbObj.dbOverPromise
-  }).then((res) => {
-    console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
-    if (res.target.result) {
 
-    } else {
-
-    }
-  })
   // const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
 
   // if (sessionStorageInfo?.length) {
