@@ -19,13 +19,27 @@ export const setLocalStorage = <T>(k: string, v: T) => {
  * @param k 键名
  * @returns any
  */
-export const getLocalStorage = (k: string):any => {
+export const getLocalStorageNew = (k: string):any => {
   const item = window.localStorage.getItem(k) || undefined
   let res = item
   if(typeof item == 'object' && !Array.isArray(item) && item != null){
     res = JSONParse(item)
   }
   return res 
+}
+
+/**
+ * * 获取本地会话数据
+ * @param k 键名
+ * @returns any
+ */
+export const getLocalStorage = (k: string) => {
+  const item = window.localStorage.getItem(k)
+  try {
+    return item ? JSONParse(item) : item
+  } catch (err) {
+    return item
+  }
 }
 
 /**

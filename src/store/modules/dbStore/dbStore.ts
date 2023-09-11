@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 import { lang } from '@/settings/designSetting'
 import { dbStateType } from './dbStore.d'
-import { setLocalStorage,  getLocalStorage } from '@/utils/storage'
+import { setLocalStorage,  getLocalStorageNew } from '@/utils/storage'
 import { StorageEnum } from '@/enums/storageEnum'
 import { watch } from 'vue'
 import { watchOnce } from '@vueuse/core'
 
 const { GO_LANG_STORE, ROOT_PATH_KEY } = StorageEnum
-const storageRootPath: dbStateType['rootPath'] = getLocalStorage(ROOT_PATH_KEY)
+const storageRootPath: dbStateType['rootPath'] = getLocalStorageNew(ROOT_PATH_KEY)
 // 语言
 export const useDbStore = defineStore({
   id: 'useDbStore',
