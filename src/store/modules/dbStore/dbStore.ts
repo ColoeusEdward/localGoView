@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { lang } from '@/settings/designSetting'
 import { dbStateType } from './dbStore.d'
-import { setLocalStorage, getLocalStorage, reloadRoutePage } from '@/utils'
+import { setLocalStorage,  getLocalStorage } from '@/utils/storage'
 import { StorageEnum } from '@/enums/storageEnum'
 import { watch } from 'vue'
 import { watchOnce } from '@vueuse/core'
