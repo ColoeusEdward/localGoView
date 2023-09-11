@@ -25,9 +25,9 @@ export const useModalDataInit = () => {
   const editHandle = (cardData: Chartype) => {
     if (!cardData) return
     const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-    getIndexedStorageInfo(cardData.id.toString()).then(res => {
-      routerTurnByPath(path, [cardData.id], undefined, false)
-    })
+    routerTurnByPath(path, [cardData.id], undefined, false)
+    // getIndexedStorageInfo(cardData.id.toString()).then(res => {
+    // })
   }
 
   //预览model
