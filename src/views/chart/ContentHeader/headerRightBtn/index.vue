@@ -84,6 +84,9 @@ const saveHandle = () => {
   })
   .then((val) => {
     console.log("🚀 ~ file: index.vue:77 ~ newPromise ~ val:", val2)
+    if(!window.ipc) return new Promise((resolve, reject) => {
+      resolve(true)
+    })
     return window.ipc.invoke('savePreviewPic', val2)
   })
   .then((res) => {
@@ -102,7 +105,7 @@ const saveHandle = () => {
     }
     console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
     const dbObjectStore = dbObj?.dbObjectStore
-    dbObjectStore.put(sdata)
+    dbObjectStore.put(structuredClone(sdata))
     return dbObj?.dbOverPromise
   }).then((res) => {
     console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
