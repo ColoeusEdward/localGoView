@@ -74,7 +74,6 @@ import { getIndexedStorageInfo } from '@/views/preview/utils'
 
 const { getDetails } = toRefs(useChartLayoutStore())
 const { setItem } = useChartLayoutStore()
-await getIndexedStorageInfo()
 const chartEditStore = useChartEditStore()
 
 const { ConstructIcon, FlashIcon, DesktopOutlineIcon, LeafIcon, RocketIcon } = icon.ionicons5
