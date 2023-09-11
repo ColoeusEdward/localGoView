@@ -10,10 +10,6 @@ export default defineComponent({
   setup(props, ctx) {
     const { path } = useRoute()
     const close = () => {
-      // window.ipc.send('closeWin')
-      window.ipc.invoke('getRootPath').then((res: string) => {
-        console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:", res)
-      })
       window.close()
     }
     const prop: any = {

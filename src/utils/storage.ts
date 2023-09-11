@@ -21,11 +21,12 @@ export const setLocalStorage = <T>(k: string, v: T) => {
  */
 export const getLocalStorage = (k: string) => {
   const item = window.localStorage.getItem(k)
-  try {
-    return item ? JSONParse(item) : item
-  } catch (err) {
-    return item
+  console.log("🚀 ~ file: storage.ts:24 ~ getLocalStorage ~ item:", item)
+  let res = item
+  if(typeof item == 'object' && !Array.isArray(item) && item != null){
+    res = JSONParse(item)
   }
+  return res 
 }
 
 /**
