@@ -19,7 +19,7 @@ export const setLocalStorage = <T>(k: string, v: T) => {
  * @param k 键名
  * @returns any
  */
-export const getLocalStorage = (k: string) => {
+export const getLocalStorage = (k: string):any => {
   const item = window.localStorage.getItem(k) || ''
   console.log("🚀 ~ file: storage.ts:24 ~ getLocalStorage ~ item:", item)
   let res = item
