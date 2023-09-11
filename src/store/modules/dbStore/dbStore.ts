@@ -23,7 +23,6 @@ export const useDbStore = defineStore({
       return this.db
     },
     getRootPath(): dbStateType['rootPath'] {
-      console.log("🚀 ~ file: dbStore.ts:27 ~ getRootPath ~ this.rootPath:", this.rootPath)
       return this.rootPath
     },
     getDbPromise(): Promise<any> {
