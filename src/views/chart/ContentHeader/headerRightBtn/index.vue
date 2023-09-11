@@ -75,33 +75,34 @@ const saveHandle = () => {
     })
   }).then((val) => {
     return window.ipc.invoke('savePreviewPic', val)
-  }).then((res) => {
-    // window['$message'].success('保存成功！')
-    if (!res) return
-
-    return useDbEdit('datav')
-  }).then((dbObj) => {
-    const sdata: Chartype = {
-      id: previewId,
-      title: document.title,
-      label: '',
-      release: false,
-      pic: picName,
-      info: storageInfo,
-    }
-    console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
-    const dbObjectStore = dbObj?.dbObjectStore
-    dbObjectStore.put(sdata)
-    return dbObj?.dbOverPromise
-  }).then((res) => {
-    console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
-    window['$message'].success('保存成功！')
-    if (res.target.result) {
-
-    } else {
-
-    }
   })
+  // .then((res) => {
+  //   // window['$message'].success('保存成功！')
+  //   if (!res) return
+
+  //   return useDbEdit('datav')
+  // }).then((dbObj) => {
+  //   const sdata: Chartype = {
+  //     id: previewId,
+  //     title: document.title,
+  //     label: '',
+  //     release: false,
+  //     pic: picName,
+  //     info: storageInfo,
+  //   }
+  //   console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
+  //   const dbObjectStore = dbObj?.dbObjectStore
+  //   dbObjectStore.put(sdata)
+  //   return dbObj?.dbOverPromise
+  // }).then((res) => {
+  //   console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
+  //   window['$message'].success('保存成功！')
+  //   if (res.target.result) {
+
+  //   } else {
+
+  //   }
+  // })
 
 
   // dbObjectStore.put
