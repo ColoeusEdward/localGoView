@@ -47,7 +47,7 @@ import { useChartHistoryStore } from '@/store/modules/chartHistoryStore/chartHis
 import { getIndexedStorageInfo } from '../preview/utils'
 
 const chartHistoryStoreStore = useChartHistoryStore()
-await getIndexedStorageInfo()
+getIndexedStorageInfo()
 const chartEditStore = useChartEditStore()
 
 // 记录初始化
