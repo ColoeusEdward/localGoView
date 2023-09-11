@@ -7,18 +7,16 @@ import { watch } from 'vue'
 import { watchOnce } from '@vueuse/core'
 
 const { GO_LANG_STORE, ROOT_PATH_KEY } = StorageEnum
-const storageLang: dbStateType = getLocalStorage(GO_LANG_STORE)
 const storageRootPath: dbStateType['rootPath'] = getLocalStorage(ROOT_PATH_KEY)
 // 语言
 export const useDbStore = defineStore({
   id: 'useDbStore',
-  state: (): dbStateType =>
-    storageLang || {
+  state: (): dbStateType => ({
       db: null,
       dbReq: null,
       rootPath: storageRootPath || '',  //项目根目录路径
-    },
-  getters: {
+    }),
+  getters: { //想使用this就不能用箭头函数
     getDb(): any {
       return this.db
     },
