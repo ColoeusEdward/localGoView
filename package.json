@@ -32,7 +32,8 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix",
     "cp": "cp -r dist/* 'D:\\NTCode\\electron\\electronVueViteChat\\public\\datav'",
-    "ea": "cd .github/workflows && start main.yml && echo edit_action"
+    "ea": "cd .github/workflows && start main.yml && echo edit_action",
+    "jpush": "git add . && git commit -m \"fix: 我阐释你的梦\"  && git push origin && echo just_push"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
