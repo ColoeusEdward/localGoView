@@ -208,7 +208,7 @@ export const canvasCut2 = (html: HTMLElement | null, callback?: Function) => {
     allowTaint: true,
     useCORS: true
   }).then((canvas: HTMLCanvasElement) => {
-    window['$message'].success('导出成功！')
+    // window['$message'].success('导出成功！')
     canvas.toBlob((blob) => {
       if (callback) callback(blob)
     }, 'image/png')

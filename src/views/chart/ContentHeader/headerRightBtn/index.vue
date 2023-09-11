@@ -1,6 +1,6 @@
 <template>
   <n-space class="go-mt-0">
-    <n-button v-for="item in comBtnList" :key="item.title" :type="item.type" ghost @click="item.event">
+    <n-button v-for="item in comBtnList" :key="item.title" :type="item.type" :loading="item.title=='保存' && saveLoading" ghost @click="item.event">
       <template #icon>
         <component :is="item.icon"></component>
       </template>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage, canvasCut2 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
@@ -26,7 +26,7 @@ import { Chartype } from '@/views/project/items/index'
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, SaveIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
 // const dbObj = useDbEdit('datav')
-
+const saveLoading = ref(false)
 const routerParamsInfo = useRoute()
 
 // 预览
@@ -67,13 +67,22 @@ const saveHandle = () => {
   // 导出图片
   const range = document.querySelector('.go-edit-range') as HTMLElement
   let picName = ''
-  new Promise((resolve, reject) => {
+  saveLoading.value = true
+  let val = { blob:<Blob|null> null, name: '' }
+  let val2 = { blob:<ArrayBuffer|undefined> undefined, name: '' }
+  return new Promise<typeof val>((resolve, reject) => {
     canvasCut2(range, (blob: Blob) => {
       picName = previewId + '.png'
-      let val = { blob, name: picName }
+      val = { blob, name: picName }
       resolve(val)
     })
   }).then((val) => {
+    return val.blob?.arrayBuffer()
+  }).then((buffer) => {
+    val2.blob = buffer
+  })
+  .then((val) => {
+    console.log("🚀 ~ file: index.vue:77 ~ newPromise ~ val:", val)
     return window.ipc.invoke('savePreviewPic', val)
   })
   // .then((res) => {
@@ -103,6 +112,9 @@ const saveHandle = () => {
 
   //   }
   // })
+  .finally(() => {
+    saveLoading.value = false
+  })
 
 
   // dbObjectStore.put
