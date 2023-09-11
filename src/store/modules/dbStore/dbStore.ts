@@ -3,7 +3,6 @@ import { lang } from '@/settings/designSetting'
 import { dbStateType } from './dbStore.d'
 import { setLocalStorage,  getLocalStorageNew } from '@/utils/storage'
 import { StorageEnum } from '@/enums/storageEnum'
-import { watch } from 'vue'
 import { watchOnce } from '@vueuse/core'
 
 const { GO_LANG_STORE, ROOT_PATH_KEY } = StorageEnum
