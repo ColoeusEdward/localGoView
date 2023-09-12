@@ -3,6 +3,8 @@ import { Chartype } from "@/views/project/items"
 import { useDbEdit } from "./useDbEdit.hook"
 const chartEditStore = useChartEditStore()
 
+
+
 export const useIndexedStorageInfo = () => {
   // 根据路由 id 获取持久存储数据的信息
   const getIndexedStorageInfo = (idd?: string) => {
@@ -35,6 +37,6 @@ export const useIndexedStorageInfo = () => {
   }
 
   return {
-    getIndexedStorageInfo
+    getIndexedStorageInfo,
   }
 }

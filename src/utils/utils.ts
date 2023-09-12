@@ -383,4 +383,9 @@ export const checkUtil = async (checkFn: Function, ms: number = 100) => {
   return checkFn()
 }
 
+export const  getHashId = () => {
+  const urlHash = document.location.hash
+  const toPathArray = urlHash.split('/')
+  return toPathArray && toPathArray[toPathArray.length - 1]
+}
 
