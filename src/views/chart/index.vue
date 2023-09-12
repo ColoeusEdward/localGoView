@@ -32,8 +32,7 @@
     :options="menuOptions"
     :show="chartEditStore.getRightMenuShow"
     :on-clickoutside="onClickOutSide"
-    @select="handleMenuSelect"
-  ></n-dropdown>
+    @select="handleMenuSelect"></n-dropdown>
   <!-- 加载蒙层 -->
   <content-load></content-load>
 </template>
@@ -44,6 +43,10 @@ import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { useChartHistoryStore } from '@/store/modules/chartHistoryStore/chartHistoryStore'
+import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
+import { onMounted } from 'vue'
+
+
 
 const chartHistoryStoreStore = useChartHistoryStore()
 const chartEditStore = useChartEditStore()
@@ -61,6 +64,11 @@ const ContentLoad = loadAsyncComponent(() => import('./ContentLoad/index.vue'))
 
 defineExpose({
   chartEditStore
+})
+
+onMounted(() => {
+  const { getIndexedStorageInfo } = useIndexedStorageInfo()
+  getIndexedStorageInfo()
 })
 
 // 右键
