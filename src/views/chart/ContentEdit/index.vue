@@ -53,7 +53,7 @@
                 <component
                   class="edit-content-chart"
                   :class="animationsClass(item.styles.animations)"
-                  :key="item.id"
+                  :key="item.id+'Component'"
                   :id="item.id"
                   :is="item.chartConfig.chartKey"
                   :chartConfig="item"
