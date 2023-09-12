@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadAsyncComponent } from '@/utils'
+import { loadAsyncComponent,initInstallComp } from '@/utils'
 import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -68,7 +68,12 @@ defineExpose({
 
 onMounted(() => {
   const { getIndexedStorageInfo } = useIndexedStorageInfo()
-  getIndexedStorageInfo()
+  getIndexedStorageInfo().then(res => {
+    let compList = chartEditStore.getComponentList
+    for (let i = 0; i < compList.length; i++) {
+      initInstallComp(compList[i].chartConfig)
+    }
+  })
 })
 
 // 右键

@@ -5,4 +5,4 @@ import Scatters from './Scatters'
 import Mores from './Mores'
 import Maps from './Maps'
 
-export const ChartList = [...Bars, ...Lines, ...Pies, ...Scatters, ...Maps, ...Mores]
+export const ChartList = [...Bars, ...Lines, ...Pies, ...Scatters, ...Maps, ...Mores]  //注意这些都只是config
