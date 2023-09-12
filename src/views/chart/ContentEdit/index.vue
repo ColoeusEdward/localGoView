@@ -26,7 +26,7 @@
             }"
           >
             <!-- 图表 -->
-            <div v-for="(item, index) in chartEditStore.componentList" :key="item.id">
+            <div v-for="(item, index) in chartEditStore.getComponentList" :key="item.id">
               <!-- 分组 -->
               <edit-group
                 v-if="item.isGroup"
