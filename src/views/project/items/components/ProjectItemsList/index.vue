@@ -5,7 +5,7 @@
       :y-gap="20"
       cols="2 s:2 m:3 l:4 xl:4 xxl:4"
       responsive="screen">
-      <n-grid-item v-for="(item, index) in list" :key="item.id">
+      <n-grid-item v-for="(item, index) in list" :key="item.id + Date.now().toString()">
         <project-items-card
           :cardData="item"
           @resize="resizeHandle"
@@ -14,12 +14,12 @@
           @preview="previewHandle"></project-items-card>
       </n-grid-item>
     </n-grid>
-    <div class="list-pagination">
+    <!-- <div class="list-pagination">
       <n-pagination
         :item-count="10"
         :page-sizes="[10, 20, 30, 40]"
         show-size-picker />
-    </div>
+    </div> -->
   </div>
   <project-items-modal-card
     v-if="modalData"
