@@ -1,6 +1,6 @@
 <template>
   <n-space class="go-mt-0">
-    <n-button v-for="item in comBtnList" :key="item.title" :type="item.type" :loading="item.title=='保存' && saveLoading" ghost @click="item.event">
+    <n-button v-for="item in comBtnList" :key="item.title" :type="item.type" :loading="item.title == '保存' && saveLoading" ghost @click="item.event">
       <template #icon>
         <component :is="item.icon"></component>
       </template>
@@ -68,8 +68,8 @@ const saveHandle = () => {
   // 导出图片
   const range = document.querySelector('.go-edit-range') as HTMLElement
   let picName = ''
-  let val = { blob:<Blob|null> null, name: '' }
-  let val2 = { blob:<ArrayBuffer|undefined> undefined, name: '' }
+  let val = { blob: <Blob | null>null, name: '' }
+  let val2 = { blob: <ArrayBuffer | undefined>undefined, name: '' }
   new Promise<typeof val>((resolve, reject) => {
     canvasCut2(range, (blob: Blob) => {
       picName = previewId + '.png'
@@ -82,46 +82,47 @@ const saveHandle = () => {
     val2.blob = buffer
     val2.name = picName
   })
-  .then((val) => {
-    console.log("🚀 ~ file: index.vue:77 ~ newPromise ~ val:", val2)
-    if(!window.ipc) return new Promise((resolve, reject) => {
-      resolve(true)
+    .then((val) => {
+      console.log("🚀 ~ file: index.vue:77 ~ newPromise ~ val:", val2)
+      if (!window.ipc) return new Promise((resolve, reject) => {
+        resolve(true)
+      })
+      return window.ipc.invoke('savePreviewPic', val2)
     })
-    return window.ipc.invoke('savePreviewPic', val2)
-  })
-  .then((res) => {
-    // window['$message'].success('保存成功！')
-    if (!res) return
+    .then((res) => {
+      // window['$message'].success('保存成功！')
+      if (!res) return
 
-    return useDbEdit('datav')
-  }).then((dbObj) => {
-    const sdata: Chartype = {
-      id: previewId,
-      title: document.title,
-      label: '',
-      release: false,
-      pic: picName,
-      info: JSON.parse(JSON.stringify(storageInfo)),
-    }
-    console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
-    const dbObjectStore = dbObj?.dbObjectStore
-    dbObjectStore.put(sdata)
-    return dbObj?.dbOverPromise
-  }).then((res) => {
-    console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
-    window['$message'].success('保存成功！')
-    if (res.target.result) {
+      return useDbEdit('datav')
+    }).then((dbObj) => {
+      const sdata: Chartype = {
+        id: previewId,
+        title: document.title,
+        label: '',
+        release: false,
+        pic: picName,
+        info: JSON.parse(JSON.stringify(storageInfo)),
+      }
+      console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
+      const dbObjectStore = dbObj?.dbObjectStore
+      dbObjectStore.put(sdata)
+      return dbObj?.dbOverPromise
+    }).then((res) => {
+      console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
+      window['$message'].success('保存成功！')
+      
+      if (res.target.result) {
 
-    } else {
+      } else {
 
-    }
-  })
-  .catch((e) => {
-    window['$message'].error('保存失败，请联系程序人员查找原因')
-  })
-  .finally(() => {
-    saveLoading.value = false
-  })
+      }
+    })
+    .catch((e) => {
+      window['$message'].error('保存失败，请联系程序人员查找原因')
+    })
+    .finally(() => {
+      saveLoading.value = false
+    })
 
 
   // dbObjectStore.put
