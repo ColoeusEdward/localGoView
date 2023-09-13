@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { loadAsyncComponent, initInstallComp, getHashId } from '@/utils'
+import { loadAsyncComponent, getHashId } from '@/utils'
 import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -48,7 +48,16 @@ import { onMounted } from 'vue'
 import { useComInstall } from '../preview/hooks/useComInstall.hook'
 import type { ChartEditStorageType } from '../preview/index.d'
 
-
+const { getIndexedStorageInfo } = useIndexedStorageInfo()
+getIndexedStorageInfo().then(res => {
+  if (res) {
+    useComInstall(chartEditStore as unknown as ChartEditStorageType)
+  }
+  // let compList = chartEditStore.getComponentList
+  // for (let i = 0; i < compList.length; i++) {
+  //   initInstallComp(compList[i].chartConfig)
+  // }
+})
 
 const chartHistoryStoreStore = useChartHistoryStore()
 const chartEditStore = useChartEditStore()
@@ -69,16 +78,7 @@ defineExpose({
 })
 
 onMounted(() => {
-  const { getIndexedStorageInfo } = useIndexedStorageInfo()
-  getIndexedStorageInfo().then(res => {
-    if (res) {
-      useComInstall(chartEditStore as unknown as ChartEditStorageType)
-    }
-    // let compList = chartEditStore.getComponentList
-    // for (let i = 0; i < compList.length; i++) {
-    //   initInstallComp(compList[i].chartConfig)
-    // }
-  })
+
 })
 
 // 右键
