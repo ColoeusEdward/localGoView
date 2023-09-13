@@ -12,7 +12,7 @@ export const usePreviewPicUrl = () => {
     const { FILE_PROTOCOL_HEAD, PREVIEW_PIC_PATH } = StorageEnum
     const rootPath = dbStore.getRootPath
     console.log("🚀 ~ file: utils.ts:392 ~ getPreviewPicUrl ~ rootPath:", rootPath)
-    return `${FILE_PROTOCOL_HEAD}${rootPath}${PREVIEW_PIC_PATH}/${name}`
+    return `${FILE_PROTOCOL_HEAD}${rootPath}${PREVIEW_PIC_PATH}/${name}?ts=${Date.now()}`
   }
 
   return {
