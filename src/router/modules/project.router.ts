@@ -17,6 +17,7 @@ const projectRoutes: RouteRecordRaw = {
   meta: {
     title: '项目',
     isRoot: true,
+    noKeepAlive: true,
   },
   children: [
     {
