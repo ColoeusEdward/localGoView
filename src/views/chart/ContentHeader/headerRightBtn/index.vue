@@ -69,10 +69,10 @@ const saveHandle = () => {
   const range = document.querySelector('.go-edit-range') as HTMLElement
   let picName = ''
   let val = { blob: <Blob | null>null, name: '' }
-  let val2 = { blob: <ArrayBuffer | undefined>undefined, name: '',oldName:'' }
+  let val2 = { blob: <ArrayBuffer | undefined>undefined, name: '', oldName: '' }
   new Promise<typeof val>((resolve, reject) => {
     canvasCut2(range, (blob: Blob) => {
-      picName = previewId + '.png'
+      picName = previewId
       val = { blob, name: picName }
       resolve(val)
     })
@@ -80,7 +80,7 @@ const saveHandle = () => {
     return val.blob?.arrayBuffer()
   }).then((buffer) => {
     val2.blob = buffer
-    val2.name = picName+Date.now()
+    val2.name = picName + Date.now() + '.png'
     val2.oldName = chartEditStore.getCurCardData?.pic || ''
   })
     .then((val) => {
