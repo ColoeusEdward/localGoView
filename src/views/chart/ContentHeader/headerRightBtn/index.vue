@@ -110,7 +110,6 @@ const saveHandle = () => {
     }).then((res) => {
       console.log("🚀 ~ file: index.vue:69 ~ dbEditPromise.then ~ res.target.result:", res.target.result)
       window['$message'].success('保存成功！')
-      
       if (res.target.result) {
 
       } else {

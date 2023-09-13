@@ -16,7 +16,7 @@ const projectRoutes: RouteRecordRaw = {
   redirect: PageEnum.BASE_HOME_ITEMS,
   meta: {
     title: '项目',
-    isRoot: true
+    isRoot: true,
   },
   children: [
     {
@@ -24,7 +24,8 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_HOME_ITEMS_NAME,
       component: importPath['PageEnum.BASE_HOME_ITEMS_NAME'],
       meta: {
-        title: '我的项目'
+        title: '我的项目',
+        noKeepAlive: true,
       }
     },
     {
