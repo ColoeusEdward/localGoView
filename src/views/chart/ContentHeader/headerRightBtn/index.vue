@@ -72,7 +72,7 @@ const saveHandle = () => {
   let val2 = { blob: <ArrayBuffer | undefined>undefined, name: '', oldName: '' }
   new Promise<typeof val>((resolve, reject) => {
     canvasCut2(range, (blob: Blob) => {
-      picName = previewId
+      picName = previewId + Date.now() + '.png'
       val = { blob, name: picName }
       resolve(val)
     })
@@ -80,7 +80,7 @@ const saveHandle = () => {
     return val.blob?.arrayBuffer()
   }).then((buffer) => {
     val2.blob = buffer
-    val2.name = picName + Date.now() + '.png'
+    val2.name = picName
     val2.oldName = chartEditStore.getCurCardData?.pic || ''
   })
     .then((val) => {
