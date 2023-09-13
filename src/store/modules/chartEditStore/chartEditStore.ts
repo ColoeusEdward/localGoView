@@ -135,7 +135,8 @@ export const useChartEditStore = defineStore({
       }
     },
     // 图表数组（需存储给后端）
-    componentList: []
+    componentList: [],
+    curCardData: null
   }),
   getters: {
     getMousePosition(): MousePositionType {
@@ -169,6 +170,9 @@ export const useChartEditStore = defineStore({
         [ChartEditStoreEnum.COMPONENT_LIST]: this.getComponentList,
         [ChartEditStoreEnum.REQUEST_GLOBAL_CONFIG]: this.getRequestGlobalConfig
       }
+    },
+    getCurCardData(): ChartEditStoreType[ChartEditStoreEnum.CUR_CARD_DATA] {
+      return this.curCardData
     }
   },
   actions: {
@@ -962,6 +966,10 @@ export const useChartEditStore = defineStore({
         this.getEditCanvas.userScale = scale
         this.getEditCanvas.scale = scale
       }
+    },
+
+    setCurCardData(data: ChartEditStoreType[ChartEditStoreEnum.CUR_CARD_DATA]) {
+      this.curCardData = data
     }
   }
 })

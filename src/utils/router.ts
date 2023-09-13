@@ -172,9 +172,9 @@ export const fetchRouteParams = () => {
  * @param confirm
  */
 export const goHome = () => {
-  const path = fetchPathByName(PageEnum.BASE_HOME_NAME, 'href')
-  window.location.href = `${path}`
-  // routerTurnByName(PageEnum.BASE_HOME_NAME)
+  // const path = fetchPathByName(PageEnum.BASE_HOME_NAME, 'href')
+  // window.location.href = `${path}`
+  routerTurnByName(PageEnum.BASE_HOME_NAME)
   // window.ipc.send('closeWin')
 }
 
