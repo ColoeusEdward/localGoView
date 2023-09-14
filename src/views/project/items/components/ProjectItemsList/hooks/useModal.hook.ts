@@ -29,18 +29,19 @@ export const useModalDataInit = () => {
   const editHandle = (cardData: Chartype) => {
     if (!cardData) return
     chartEditStore.setCurCardData(cardData)
-    setSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{...cardData.info,id:cardData.id}])
+
     const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-      routerTurnByPath(path, [cardData.id], undefined, false,)
-    
+    routerTurnByPath(path, [cardData.id], undefined, false,)
+
   }
 
   //预览model
   const previewHandle = (cardData: Chartype) => {
     console.log("🚀 ~ file: useModal.hook.ts:32 ~ previewHandle ~ cardData:", cardData)
     if (!cardData) return
+    setSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{ ...cardData.info, id: cardData.id }])
     const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'href')
-    routerTurnByPath(path, [cardData.id], undefined, true,{prePageMark:'project'})
+    routerTurnByPath(path, [cardData.id], undefined, true)
   }
 
   return {

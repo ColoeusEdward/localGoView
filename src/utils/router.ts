@@ -62,14 +62,10 @@ export const routerTurnByPath = (
   query?: Array<string | number>,
   isReplace?: boolean,
   windowOpen?: boolean,
-  paramQuery?:Record<string,string>
 ) => {
   let fullPath = ''
   if (query?.length) {
     fullPath = `${path}/${query.join('/')}`
-  }
-  if(paramQuery){
-    fullPath = `${fullPath}?${objectToQueryString(paramQuery)}`
   }
   if (windowOpen) {
     return openNewWindow(fullPath)
