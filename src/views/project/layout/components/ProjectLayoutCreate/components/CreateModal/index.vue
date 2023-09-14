@@ -39,10 +39,12 @@ import { ref, watch, shallowRef } from 'vue'
 import { icon } from '@/plugins'
 import { PageEnum, ChartEnum } from '@/enums/pageEnum'
 import { fetchPathByName, routerTurnByPath, renderLang, getUUID } from '@/utils'
+import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore';
 
 const { FishIcon, CloseIcon } = icon.ionicons5
 const { StoreIcon, ObjectStorageIcon } = icon.carbon
 const showRef = ref(false)
+const chartEditStore = useChartEditStore()
 
 const emit = defineEmits(['close'])
 const props = defineProps({
@@ -62,12 +64,12 @@ const typeList = shallowRef([
     icon: ObjectStorageIcon,
     disabled: true
   },
-  {
-    title: renderLang('project.template_market'),
-    key: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
-    icon: StoreIcon,
-    disabled: true
-  }
+  // {
+  //   title: renderLang('project.template_market'),
+  //   key: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
+  //   icon: StoreIcon,
+  //   disabled: true
+  // }
 ])
 
 watch(props, newValue => {
@@ -83,6 +85,7 @@ const closeHandle = () => {
 const btnHandle = (key: string) => {
   closeHandle()
   const id = getUUID()
+  chartEditStore.setCurCardData(null)
   const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
   routerTurnByPath(path, [id], )
 }

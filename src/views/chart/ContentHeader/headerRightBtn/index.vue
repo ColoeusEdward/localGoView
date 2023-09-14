@@ -72,7 +72,7 @@ const saveHandle = () => {
   let val2 = { blob: <ArrayBuffer | undefined>undefined, name: '', oldName: '' }
   new Promise<typeof val>((resolve, reject) => {
     canvasCut2(range, (blob: Blob) => {
-      picName = previewId + Date.now() + '.png'
+      picName = previewId + '-' + Date.now() + '.png'
       val = { blob, name: picName }
       resolve(val)
     })
