@@ -38,14 +38,17 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
+import { useRouter } from 'vue-router'
 
-// const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
+const { currentRoute } = useRouter()
 
 const { getIndexedStorageInfo } = useIndexedStorageInfo()
-
-let res = await getSessionStorageInfo()
-if (!res) {
+let prePath = currentRoute.value.matched.slice(-2, -1)[0].path || ''
+// console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePath:", prePath)
+if (prePath.search('project') > -1) {
   await getIndexedStorageInfo()
+} else {
+  await getSessionStorageInfo()
 }
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
