@@ -98,7 +98,7 @@ const saveHandle = () => {
     }).then((dbObj) => {
       const sdata: Chartype = {
         id: previewId,
-        title: document.title,
+        title: document.title.split('-').pop() || '',
         label: '',
         release: false,
         pic: picName,
