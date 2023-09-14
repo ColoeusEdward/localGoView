@@ -41,9 +41,12 @@ import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
 
-// await getSessionStorageInfo()
 const { getIndexedStorageInfo } = useIndexedStorageInfo()
-await getIndexedStorageInfo()
+
+let res = await getSessionStorageInfo()
+if (!res) {
+  await getIndexedStorageInfo()
+}
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
@@ -106,4 +109,5 @@ keyRecordHandle()
   .go-preview-entity {
     overflow: hidden;
   }
-}</style>
+}
+</style>
