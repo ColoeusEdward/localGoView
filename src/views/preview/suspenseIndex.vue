@@ -40,17 +40,16 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
 import { useRoute } from 'vue-router'
 
-const { query } = useRoute()
+// const { query } = useRoute()
 
-const { getIndexedStorageInfo } = useIndexedStorageInfo()
-let prePageMark = query.prePageMark?.toString() || ''
-console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePageMark:", prePageMark)
-// console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePath:", prePath)
-if (prePageMark.search('project') > -1) {
-  await getIndexedStorageInfo()
-} else {
-  await getSessionStorageInfo()
-}
+// const { getIndexedStorageInfo } = useIndexedStorageInfo()
+// let prePageMark = query.prePageMark?.toString() || ''
+await getSessionStorageInfo()
+// console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePageMark:", prePageMark)
+// if (prePageMark.search('project') > -1) {
+//   await getIndexedStorageInfo()
+// } else {
+// }
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
