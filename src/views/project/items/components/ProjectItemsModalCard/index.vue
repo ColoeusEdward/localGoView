@@ -3,8 +3,7 @@
   <n-modal
     class="go-modal-box"
     v-model:show="showRef"
-    @afterLeave="closeHandle"
-  >
+    @afterLeave="closeHandle">
     <n-card hoverable size="small">
       <div class="list-content">
         <!-- 标题 -->
@@ -20,24 +19,21 @@
           <mac-os-control-btn
             :narrow="true"
             :hidden="['close']"
-            @remove="closeHandle"
-         ></mac-os-control-btn>
+            @remove="closeHandle"></mac-os-control-btn>
         </n-space>
         <!-- 中间 -->
         <div class="list-content-img">
           <img
-            :src="
-              requireUrl('project/moke-20211219181327.png')
-            "
-            :alt="cardData?.title"
-          />
+            :src="getPreviewPicUrl(cardData.pic!) || requireUrl('project/moke-20211219181327.png')
+              "
+            :alt="cardData?.title" />
         </div>
       </div>
       <template #action>
         <n-space class="list-footer" justify="space-between">
           <n-text depth="3">
             {{ $t('project.last_edit') }}:
-            <n-time :time="new Date()" format="yyyy-MM-dd hh:mm"></n-time>
+            <n-time :time="new Date()" format="yyyy-MM-dd HH:mm"></n-time>
           </n-text>
           <!-- 工具 -->
           <n-space>
@@ -79,6 +75,7 @@ import { ref, reactive, watch } from 'vue'
 import { renderIcon, renderLang } from '@/utils'
 import { icon } from '@/plugins'
 import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
+import { usePreviewPicUrl } from '@/hooks/usePreviewPicUrl';
 
 const { HammerIcon } = icon.ionicons5
 const showRef = ref(false)
@@ -94,6 +91,8 @@ const props = defineProps({
     type: Object
   }
 })
+
+const { getPreviewPicUrl } = usePreviewPicUrl()
 
 watch(
   () => props.modalShow,
@@ -144,12 +143,14 @@ $contentWidth: calc(82vw);
 
 @include go('modal-box') {
   width: $contentWidth;
+
   .list-content {
     margin-top: 28px;
     border-radius: $--border-radius-base;
     overflow: hidden;
     @include background-image('background-point');
     @extend .go-point-bg;
+
     &-top {
       position: absolute;
       top: 7px;
@@ -158,8 +159,10 @@ $contentWidth: calc(82vw);
       height: 22px;
       width: $contentWidth;
     }
+
     &-img {
       @extend .go-flex-center;
+
       img {
         max-height: $contentHeight;
         min-height: 200px;
@@ -168,6 +171,7 @@ $contentWidth: calc(82vw);
       }
     }
   }
+
   .list-footer {
     line-height: 30px;
   }
