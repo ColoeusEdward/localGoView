@@ -54,7 +54,8 @@ const title = ref<string>(fetchProhectInfoById() || '')
 const comTitle = computed(() => {
   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
   title.value = title.value.replace(/\s/g, '')
-  const newTitle = title.value.length ? title.value : '新项目'
+  const cardTitle = chartEditStore.getCurCardData?.title
+  const newTitle = cardTitle || (title.value.length ? title.value : '新项目')
   setTitle(`工作空间-${newTitle}`)
   chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.PROJECT_NAME, newTitle)
   return newTitle
