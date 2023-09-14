@@ -61,23 +61,27 @@ export const routerTurnByPath = (
   path: string,
   query?: Array<string | number>,
   isReplace?: boolean,
-  windowOpen?: boolean
+  windowOpen?: boolean,
+  paramQuery?:Record<string,string>
 ) => {
   let fullPath = ''
   if (query?.length) {
     fullPath = `${path}/${query.join('/')}`
+  }
+  if(paramQuery){
+    fullPath = `${fullPath}?${objectToQueryString(paramQuery)}`
   }
   if (windowOpen) {
     return openNewWindow(fullPath)
   }
   if (isReplace) {
     router.replace({
-      path: fullPath.replace('#',''),
+      path: fullPath.replace('#', ''),
     })
     return
   }
   router.push({
-    path: fullPath.replace('#',''),
+    path: fullPath.replace('#', ''),
   })
 }
 
@@ -157,7 +161,7 @@ export const fetchRouteParams = () => {
  * * 通过硬解析获取当前路由下的参数
  * @returns object
  */
- export const fetchRouteParamsLocation = () => {
+export const fetchRouteParamsLocation = () => {
   try {
     // 防止添加query参数的时候，解析ID异常
     return document.location.hash.split('?')[0].split('/').pop() || ''
@@ -194,4 +198,18 @@ export const loginCheck = () => {
   } catch (error) {
     return false
   }
+}
+
+// Function to convert an object to a URL query string
+export function objectToQueryString(obj:Record<string,string>) {
+  const keyValuePairs = [];
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+    }
+  }
+
+  return keyValuePairs.join('&');
 }

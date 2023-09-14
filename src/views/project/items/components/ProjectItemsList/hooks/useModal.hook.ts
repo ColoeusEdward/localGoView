@@ -29,7 +29,7 @@ export const useModalDataInit = () => {
     if (!cardData) return
     chartEditStore.setCurCardData(cardData)
     const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-      routerTurnByPath(path, [cardData.id], undefined, false)
+      routerTurnByPath(path, [cardData.id], undefined, false,)
     
   }
 
@@ -38,7 +38,7 @@ export const useModalDataInit = () => {
     console.log("🚀 ~ file: useModal.hook.ts:32 ~ previewHandle ~ cardData:", cardData)
     if (!cardData) return
     const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'href')
-    routerTurnByPath(path, [cardData.id], undefined, true)
+    routerTurnByPath(path, [cardData.id], undefined, true,{prePageMark:'project'})
   }
 
   return {

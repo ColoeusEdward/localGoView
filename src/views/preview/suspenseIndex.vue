@@ -38,14 +38,15 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
-const { currentRoute } = useRouter()
+const { query } = useRoute()
 
 const { getIndexedStorageInfo } = useIndexedStorageInfo()
-let prePath = currentRoute.value.matched.slice(-2, -1)[0].path || ''
+let prePageMark = query.prePageMark?.toString() || ''
+console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePageMark:", prePageMark)
 // console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePath:", prePath)
-if (prePath.search('project') > -1) {
+if (prePageMark.search('project') > -1) {
   await getIndexedStorageInfo()
 } else {
   await getSessionStorageInfo()
