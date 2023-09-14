@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { checkUtil, goDialog } from '@/utils'
 import { DialogEnum } from '@/enums/pluginEnum'
-import { ChartList } from '../../..'
+import { ChartList, Chartype } from '../../..'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
 // 数据初始化
 export const useDataListInit = () => {
@@ -53,12 +53,21 @@ export const useDataListInit = () => {
 
 
   // 删除
-  const deleteHandle = (cardData: object, index: number) => {
+  const deleteHandle = (cardData: Chartype, index: number) => {
     goDialog({
       type: DialogEnum.DELETE,
       promise: true,
       onPositiveCallback: () =>
-        new Promise(res => setTimeout(() => res(1), 1000)),
+        new Promise((resolve, reject) => {
+          const dbObjPromise = useDbEdit('datav')
+          dbObjPromise.then((dbObj) => {
+            dbObj.dbObjectStore.delete(cardData.id)
+            dbObj.dbOverPromise?.then((res) => {
+              console.log("🚀 ~ file: useData.hook.ts:66 ~ dbObj.dbOverPromise?.then ~ res:", res)
+                resolve(res)
+            })
+          })
+        }),
       promiseResCallback: (e: any) => {
         window.$message.success('删除成功')
         list.value.splice(index, 1)
