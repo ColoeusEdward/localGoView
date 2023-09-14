@@ -22,8 +22,7 @@
       placeholder="请输入项目名称"
       v-model:value.trim="title"
       @keyup.enter="handleBlur"
-      @blur="handleBlur"
-    ></n-input>
+      @blur="handleBlur"></n-input>
   </n-space>
 </template>
 
@@ -36,13 +35,16 @@ import { icon } from '@/plugins'
 
 const { FishIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
-
+const cardTitle = chartEditStore.getCurCardData?.title
 const focus = ref<boolean>(false)
 const inputInstRef = ref(null)
 
 // 根据路由 id 参数获取项目信息
 const fetchProhectInfoById = () => {
   const id = fetchRouteParamsLocation()
+  if (cardTitle) {
+    return cardTitle
+  }
   if (id.length) {
     return id[0]
   }
@@ -54,8 +56,7 @@ const title = ref<string>(fetchProhectInfoById() || '')
 const comTitle = computed(() => {
   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
   title.value = title.value.replace(/\s/g, '')
-  const cardTitle = chartEditStore.getCurCardData?.title
-  const newTitle = cardTitle || (title.value.length ? title.value : '新项目')
+  const newTitle = (title.value.length ? title.value : '新项目')
   setTitle(`工作空间-${newTitle}`)
   chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.PROJECT_NAME, newTitle)
   return newTitle
