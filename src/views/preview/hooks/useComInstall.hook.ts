@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { ChartEditStorageType } from '../index.d'
 import { CreateComponentType, CreateComponentGroupType } from '@/packages/index.d'
-import { fetchChartComponent } from '@/packages/index'
+import { fetchChartComponent, fetchConfigComponent } from '@/packages/index'
 
 export const useComInstall = (localStorageInfo: ChartEditStorageType) => {
   const show = ref(false)
@@ -14,6 +14,7 @@ export const useComInstall = (localStorageInfo: ChartEditStorageType) => {
       const intComponent = (target: CreateComponentType) => {
         if (!window['$vue'].component(target.chartConfig.chartKey)) {
           window['$vue'].component(target.chartConfig.chartKey, fetchChartComponent(target.chartConfig))
+          window['$vue'].component(target.chartConfig.conKey, fetchConfigComponent(target.chartConfig))
         }
       }
 
