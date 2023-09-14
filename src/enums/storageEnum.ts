@@ -25,4 +25,6 @@ export enum StorageEnum {
   FILE_PROTOCOL_HEAD = 'mygo:///',
   //preview pic file path
   PREVIEW_PIC_PATH = '/resource/pic/project',
+  //preview pic file path
+  BG_PIC_PATH = '/resource/pic/bg',
 }

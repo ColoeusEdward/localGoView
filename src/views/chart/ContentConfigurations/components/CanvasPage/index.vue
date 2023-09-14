@@ -8,8 +8,7 @@
           v-model:value="canvasConfig.width"
           :disabled="editCanvas.lockScale"
           :validator="validator"
-          @update:value="changeSizeHandle"
-        ></n-input-number>
+          @update:value="changeSizeHandle"></n-input-number>
       </n-form-item>
       <n-form-item label="高度">
         <n-input-number
@@ -17,8 +16,7 @@
           v-model:value="canvasConfig.height"
           :disabled="editCanvas.lockScale"
           :validator="validator"
-          @update:value="changeSizeHandle"
-        ></n-input-number>
+          @update:value="changeSizeHandle"></n-input-number>
       </n-form-item>
     </n-form>
 
@@ -27,8 +25,7 @@
         v-model:file-list="uploadFileListRef"
         :show-file-list="false"
         :customRequest="customRequest"
-        :onBeforeUpload="beforeUploadHandle"
-      >
+        :onBeforeUpload="beforeUploadHandle">
         <n-upload-dragger>
           <img v-if="canvasConfig.backgroundImage" class="upload-show" :src="canvasConfig.backgroundImage" alt="背景" />
           <div class="upload-img" v-show="!canvasConfig.backgroundImage">
@@ -50,8 +47,7 @@
             style="width: 250px"
             v-model:value="canvasConfig.background"
             :showPreview="true"
-            :swatches="swatchesColors"
-          ></n-color-picker>
+            :swatches="swatchesColors"></n-color-picker>
         </div>
       </n-space>
       <n-space>
@@ -62,8 +58,7 @@
           v-model:value="selectColorValue"
           :disabled="!canvasConfig.backgroundImage"
           :options="selectColorOptions"
-          @update:value="selectColorValueHandle"
-        />
+          @update:value="selectColorValueHandle" />
       </n-space>
       <n-space>
         <n-text>背景控制</n-text>
@@ -83,8 +78,7 @@
             :type="canvasConfig.previewScaleType === item.key ? 'primary' : 'tertiary'"
             ghost
             size="small"
-            @click="selectPreviewType(item.key)"
-          >
+            @click="selectPreviewType(item.key)">
             <n-tooltip :show-arrow="false" trigger="hover">
               <template #trigger>
                 <n-icon class="select-preview-icon" size="18">
@@ -109,8 +103,7 @@
         :key="item.key"
         :name="item.key"
         size="small"
-        display-directive="show:lazy"
-      >
+        display-directive="show:lazy">
         <template #tab>
           <n-space>
             <span>{{ item.title }}</span>
@@ -137,6 +130,8 @@ import { UploadCustomRequestOptions } from 'naive-ui'
 import { fileToUrl, loadAsyncComponent } from '@/utils'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import { icon } from '@/plugins'
+import { StorageEnum } from '@/enums/storageEnum'
+import { usePicUrl } from '@/hooks/usePicUrl'
 
 const { ColorPaletteIcon } = icon.ionicons5
 const { ScaleIcon, FitToScreenIcon, FitToHeightIcon, FitToWidthIcon } = icon.carbon
@@ -144,6 +139,8 @@ const { ScaleIcon, FitToScreenIcon, FitToHeightIcon, FitToWidthIcon } = icon.car
 const chartEditStore = useChartEditStore()
 const canvasConfig = chartEditStore.getEditCanvasConfig
 const editCanvas = chartEditStore.getEditCanvas
+
+const { getBgPicUrl } = usePicUrl()
 
 const uploadFileListRef = ref()
 const switchSelectColorLoading = ref(false)
@@ -263,14 +260,44 @@ const clearColor = () => {
   switchSelectColorHandle()
 }
 
+//背景图文件写入本地
+const saveToBg = (file: File) => {
+  let list = file.name.split('.')
+  let fileName = `${list[0]}-${Date.now()}.${list[1]}`
+  return file.arrayBuffer().then(buffer => {
+    let val = { blob: <Buffer | null>buffer, name: fileName, path: StorageEnum.BG_PIC_PATH, oldName: '' }
+    if (canvasConfig.backgroundImage) {
+      val.oldName = canvasConfig.backgroundImage
+    }
+    return window.ipc.invoke('savePic', val)
+  }).then(res => {
+    return new Promise((resolve, reject) => {
+      if (res)
+        resolve(getBgPicUrl(fileName))
+      else
+        resolve(res)
+    })
+  })
+}
+
 // 自定义上传操作
 const customRequest = (options: UploadCustomRequestOptions) => {
   const { file } = options
   nextTick(() => {
     if (file.file) {
-      const ImageUrl = fileToUrl(file.file)
-      chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND_IMAGE, ImageUrl)
-      chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.SELECT_COLOR, false)
+      // const ImageUrl = fileToUrl(file.file)
+      saveToBg(file.file).then((res) => {
+        if (!res) {
+          window['$message'].error('图片保存失败')
+          return
+        }
+        const ImageUrl = res as string
+        chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND_IMAGE, ImageUrl)
+        chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.SELECT_COLOR, false)
+      })
+
+      // chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND_IMAGE, ImageUrl)
+      // chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.SELECT_COLOR, false)
     } else {
       window['$message'].error('添加图片失败，请稍后重试！')
     }
@@ -286,11 +313,14 @@ const selectPreviewType = (key: PreviewScaleEnum) => {
 <style lang="scss" scoped>
 $uploadWidth: 326px;
 $uploadHeight: 193px;
+
 @include go(canvas-setting) {
   padding-top: 20px;
+
   .upload-box {
     cursor: pointer;
     margin-bottom: 20px;
+
     @include deep() {
       .n-upload-dragger {
         padding: 5px;
@@ -298,37 +328,46 @@ $uploadHeight: 193px;
         background-color: rgba(0, 0, 0, 0);
       }
     }
+
     .upload-show {
       width: -webkit-fill-available;
       height: $uploadHeight;
       border-radius: 5px;
     }
+
     .upload-img {
       display: flex;
       flex-direction: column;
       align-items: center;
+
       img {
         height: 150px;
       }
+
       .upload-desc {
         padding: 10px 0;
       }
     }
   }
+
   .icon-position {
     padding-top: 2px;
   }
+
   .picker-height {
     min-height: 35px;
   }
+
   .clear-btn {
     padding-left: 2.25em;
     padding-right: 2.25em;
   }
+
   .select-preview-icon {
     padding-right: 0.68em;
     padding-left: 0.68em;
   }
+
   .tabs-box {
     margin-top: 20px;
   }

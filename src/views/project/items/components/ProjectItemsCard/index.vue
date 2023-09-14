@@ -85,7 +85,7 @@ import { icon } from '@/plugins'
 import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
 import { Chartype } from '../../index.d'
 import { log } from 'console'
-import { usePreviewPicUrl } from '@/hooks/usePreviewPicUrl'
+import { usePicUrl } from '@/hooks/usePicUrl'
 
 const {
   EllipsisHorizontalCircleSharpIcon,
@@ -103,7 +103,7 @@ const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
 const props = defineProps({
   cardData: Object as PropType<Chartype>
 })
-const {getPreviewPicUrl} = usePreviewPicUrl()
+const {getPreviewPicUrl} = usePicUrl()
 // 处理url获取
 const requireUrl = (name: string) => {
   return new URL(`../../../../../assets/images/${name}`, import.meta.url).href

@@ -75,7 +75,7 @@ import { ref, reactive, watch } from 'vue'
 import { renderIcon, renderLang } from '@/utils'
 import { icon } from '@/plugins'
 import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
-import { usePreviewPicUrl } from '@/hooks/usePreviewPicUrl';
+import { usePicUrl } from '@/hooks/usePicUrl';
 
 const { HammerIcon } = icon.ionicons5
 const showRef = ref(false)
@@ -92,7 +92,7 @@ const props = defineProps({
   }
 })
 
-const { getPreviewPicUrl } = usePreviewPicUrl()
+const { getPreviewPicUrl } = usePicUrl()
 
 watch(
   () => props.modalShow,
