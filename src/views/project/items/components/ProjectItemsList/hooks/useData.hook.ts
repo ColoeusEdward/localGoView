@@ -4,8 +4,10 @@ import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList, Chartype } from '../../..'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
 import { StorageEnum } from '@/enums/storageEnum'
+import {ChartEditStoreEnum,EditCanvasConfigEnum} from '@/store/modules/chartEditStore/chartEditStore.d'
 // 数据初始化
 export const useDataListInit = () => {
+  // const chartEditStore = useChartEditStore()
   const list = ref<ChartList>([
     // {
     //   id: 1,
@@ -67,7 +69,9 @@ export const useDataListInit = () => {
               console.log("🚀 ~ file: useData.hook.ts:66 ~ dbObj.dbOverPromise?.then ~ res:", res)
               if (cardData.pic) {  //删除预览图文件
                 let val = { name: cardData.pic, path: StorageEnum.BG_PIC_PATH }
-                window.ipc.invoke('delPic',val)
+                window.ipc.invoke('delPic', val)
+                let val2 = { fullPath: cardData.info![ChartEditStoreEnum.EDIT_CANVAS_CONFIG][EditCanvasConfigEnum.BACKGROUND_IMAGE] }
+                window.ipc.invoke('delPic', val2)
               }
               resolve(res)
             })

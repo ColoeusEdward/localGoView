@@ -239,6 +239,8 @@ const selectColorValueHandle = (value: number) => {
 
 // 清除背景
 const clearImage = () => {
+  let val = { fullPath: chartEditStore.getEditCanvasConfig.backgroundImage }
+  window.ipc.invoke('delPic', val)
   chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND_IMAGE, undefined)
   chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.SELECT_COLOR, true)
 }
@@ -292,6 +294,10 @@ const customRequest = (options: UploadCustomRequestOptions) => {
           return
         }
         const ImageUrl = res as string
+        let val2 = { fullPath: chartEditStore.getEditCanvasConfig[EditCanvasConfigEnum.BACKGROUND_IMAGE] }
+        if (val2.fullPath) {
+          window.ipc.invoke('delPic', val2)
+        }
         chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND_IMAGE, ImageUrl)
         chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.SELECT_COLOR, false)
       })

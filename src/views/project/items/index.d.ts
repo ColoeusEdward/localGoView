@@ -1,4 +1,4 @@
-import { ChartEditStorage } from "@/store/modules/chartEditStore/chartEditStore.d.ts"
+import type { ChartEditStorage } from "@/store/modules/chartEditStore/chartEditStore.d"
 
 export type Chartype = {
   id: number | string
