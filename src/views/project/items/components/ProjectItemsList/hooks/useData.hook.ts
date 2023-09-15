@@ -3,6 +3,7 @@ import { checkUtil, goDialog } from '@/utils'
 import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList, Chartype } from '../../..'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
+import { StorageEnum } from '@/enums/storageEnum'
 // 数据初始化
 export const useDataListInit = () => {
   const list = ref<ChartList>([
@@ -64,7 +65,11 @@ export const useDataListInit = () => {
             dbObj.dbObjectStore.delete(cardData.id)
             dbObj.dbOverPromise?.then((res) => {
               console.log("🚀 ~ file: useData.hook.ts:66 ~ dbObj.dbOverPromise?.then ~ res:", res)
-                resolve(res)
+              if (cardData.pic) {  //删除预览图文件
+                let val = { name: cardData.pic, path: StorageEnum.BG_PIC_PATH }
+                window.ipc.invoke('delPic',val)
+              }
+              resolve(res)
             })
           })
         }),
