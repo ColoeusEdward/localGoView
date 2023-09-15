@@ -25,7 +25,7 @@ export const useIndexedStorageInfo = () => {
             resolve(false)
             return
           }
-          const { editCanvasConfig, requestGlobalConfig, componentList } = item.info
+          const { editCanvasConfig, requestGlobalConfig, componentList } = item.info!
           chartEditStore.editCanvasConfig = editCanvasConfig
           chartEditStore.requestGlobalConfig = requestGlobalConfig
           chartEditStore.componentList = componentList
