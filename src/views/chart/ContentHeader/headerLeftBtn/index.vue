@@ -1,12 +1,13 @@
 <template>
   <n-space class="header-left-btn" :size="25">
-    <n-button size="small" quaternary @click="goHomeHandle()">
+    <HomeBtn />
+    <!-- <n-button size="small" quaternary @click="goHomeHandle()">
       <template #icon>
         <n-icon :depth="3">
           <home-icon></home-icon>
         </n-icon>
       </template>
-    </n-button>
+    </n-button> -->
     <n-space>
       <!-- 模块展示按钮 -->
       <n-tooltip v-for="item in btnList" :key="item.key" placement="bottom" trigger="hover">
@@ -46,6 +47,9 @@ import { HistoryStackEnum } from '@/store/modules/chartHistoryStore/chartHistory
 
 import { useChartLayoutStore } from '@/store/modules/chartLayoutStore/chartLayoutStore'
 import { ChartLayoutStoreEnum } from '@/store/modules/chartLayoutStore/chartLayoutStore.d'
+import HomeBtn from './HomeBtn'
+
+
 
 const { LayersIcon, BarChartIcon, PrismIcon, HomeIcon, ArrowBackIcon, ArrowForwardIcon } = icon.ionicons5
 const { setItem } = useChartLayoutStore()
