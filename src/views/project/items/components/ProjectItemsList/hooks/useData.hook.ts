@@ -50,7 +50,7 @@ export const useDataListInit = () => {
       console.log("🚀 ~ file: index.vue:69 ~ saveHandle ~ res:", res)
       if (res) {
         // 保存到本地
-        list.value = path.search('template') > -1 ? res.filter(item => item.isTemplate) : res
+        list.value = path.search('template') > -1 ? res.filter(item => item.isTemplate) : res.filter(item => !item.isTemplate)
       }
     }
   })
