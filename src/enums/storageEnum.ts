@@ -27,4 +27,6 @@ export enum StorageEnum {
   PREVIEW_PIC_PATH = '/resource/pic/project',
   //preview pic file path
   BG_PIC_PATH = '/resource/pic/bg',
+  //custom pic file path
+  CUSTOM_PIC_PATH = '/resource/pic/custom',
 }

@@ -6,8 +6,10 @@ import { StorageEnum } from '@/enums/storageEnum'
 import { FileTypeEnum } from '@/enums/fileTypeEnum'
 import { backgroundImageSize } from '@/settings/designSetting'
 import { usePackagesStore } from '@/store/modules/packagesStore/packagesStore'
+import { useDbStore } from '@/store/modules/dbStore/dbStore'
 
 const StoreKey = StorageEnum.GO_USER_MEDIA_PHOTOS
+const {FILE_PROTOCOL_HEAD,CUSTOM_PIC_PATH} = StorageEnum
 
 /**
  * 上传完成事件类型
@@ -27,20 +29,29 @@ const uploadFile = (callback: Function | null = null) => {
     if (!input.files || !input.files.length) return
     const file = input.files[0]
     const { name, size, type } = file
-    if (size > 1024 * 1024 * backgroundImageSize) {
-      window['$message'].warning(`图片超出 ${backgroundImageSize}M 限制，请重新上传！`)
-      return false
-    }
+    // if (size > 1024 * 1024 * backgroundImageSize) {
+    //   window['$message'].warning(`图片超出 ${backgroundImageSize}M 限制，请重新上传！`)
+    //   return false
+    // }
     if (type !== FileTypeEnum.PNG && type !== FileTypeEnum.JPEG && type !== FileTypeEnum.GIF) {
       window['$message'].warning('文件格式不符合，请重新上传！')
       return false
     }
-    const reader = new FileReader()
-    reader.onload = () => {
-      const eventObj: UploadCompletedEventType = { fileName: name, url: reader.result as string }
+    file.arrayBuffer().then((buffer: ArrayBuffer) => {
+      return window.ipc.invoke('savePic', { blob: buffer, name: file.name, })
+    }).then((res: any) => {
+      if(!res) return
+      const dbStore = useDbStore()
+      const rootPath = dbStore.getRootPath
+      const eventObj: UploadCompletedEventType = { fileName: name, url: `${FILE_PROTOCOL_HEAD}${rootPath}${CUSTOM_PIC_PATH}/${name}` }
       callback && callback(eventObj)
-    }
-    reader.readAsDataURL(file)
+    })
+    // const reader = new FileReader()
+    // reader.onload = () => {
+    //   const eventObj: UploadCompletedEventType = { fileName: name, url: reader.result as string }
+    //   callback && callback(eventObj)
+    // }
+    // reader.readAsDataURL(file)
   }
   input.click()
 }
@@ -58,32 +69,34 @@ const addConfig = {
   configEvents: {
     // 点击上传事件
     addHandle: (photoConfig: ConfigType) => {
-      goDialog({
-        message: `图片需小于 ${backgroundImageSize}M 且只暂存在浏览器中。当前图片暂存上限5M，超过不再缓存新图片，请自行对接后端接口！现编译成 base64 进行渲染，对接后端后请使用【URL地址】进行交互！`,
-        transformOrigin: 'center',
-        onPositiveCallback: () => {
-          uploadFile((e: UploadCompletedEventType) => {
-            // 和上传组件一样配置，更换标题，图片，预设数据
-            const packagesStore = usePackagesStore()
-            const newPhoto = {
-              ...ImageConfig,
-              category: ChatCategoryEnum.PRIVATE,
-              categoryName: ChatCategoryEnumName.PRIVATE,
-              package: PackagesCategoryEnum.PHOTOS,
-              chartFrame: ChartFrameEnum.STATIC,
-              title: e.fileName,
-              image: e.url,
-              dataset: e.url,
-              redirectComponent: `${ImageConfig.package}/${ImageConfig.category}/${ImageConfig.key}` // 跳转组件路径规则：packageName/categoryName/componentKey
-            }
-            userPhotosList.unshift(newPhoto)
-            // 存储在本地数据中
-            setLocalStorage(StoreKey, userPhotosList)
-            // 插入到上传按钮前的位置
-            packagesStore.addPhotos(newPhoto, 1)
-          })
+      uploadFile((e: UploadCompletedEventType) => {
+        // 和上传组件一样配置，更换标题，图片，预设数据
+        const packagesStore = usePackagesStore()
+        const newPhoto = {
+          ...ImageConfig,
+          category: ChatCategoryEnum.PRIVATE,
+          categoryName: ChatCategoryEnumName.PRIVATE,
+          package: PackagesCategoryEnum.PHOTOS,
+          chartFrame: ChartFrameEnum.STATIC,
+          title: e.fileName,
+          image: e.url,
+          dataset: e.url,
+          redirectComponent: `${ImageConfig.package}/${ImageConfig.category}/${ImageConfig.key}` // 跳转组件路径规则：packageName/categoryName/componentKey
         }
+        userPhotosList.unshift(newPhoto)
+        // 存储在本地数据中
+        setLocalStorage(StoreKey, userPhotosList)
+        // 插入到上传按钮前的位置
+        packagesStore.addPhotos(newPhoto, 1)
       })
+
+      // goDialog({
+      //   message: `图片需小于 ${backgroundImageSize}M 且只暂存在浏览器中。当前图片暂存上限5M，超过不再缓存新图片，请自行对接后端接口！现编译成 base64 进行渲染，对接后端后请使用【URL地址】进行交互！`,
+      //   transformOrigin: 'center',
+      //   onPositiveCallback: () => {
+
+      //   }
+      // })
     }
   }
 }
