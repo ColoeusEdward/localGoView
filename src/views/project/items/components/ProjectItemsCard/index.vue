@@ -58,7 +58,7 @@
                   </n-dropdown>
                 </template>
 
-                <n-tooltip v-else placement="bottom" trigger="hover">
+                <n-tooltip v-else placement="bottom" trigger="hover" v-if="!item.isHide">
                   <template #trigger>
                     <n-button size="small" @click="handleSelect(item.key)">
                       <template #icon>
@@ -86,6 +86,7 @@ import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
 import { Chartype } from '../../index.d'
 import { usePicUrl } from '@/hooks/usePicUrl'
 import { Template } from '@vicons/carbon'
+import { useRoute } from 'vue-router'
 
 const {
   EllipsisHorizontalCircleSharpIcon,
@@ -99,6 +100,7 @@ const {
 } = icon.ionicons5
 
 const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'baseFrom'])
+const { path } = useRoute()
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
@@ -113,7 +115,8 @@ const fnBtnList = reactive([
   {
     label: renderLang('global.r_base_from'),
     key: 'baseFrom',
-    icon: renderIcon(Template)
+    icon: renderIcon(Template),
+    isHide: path.search('template') == -1
   },
   {
     label: renderLang('global.r_edit'),

@@ -18,7 +18,7 @@
             :disabled="item.disabled"
             v-for="item in typeList"
             :key="item.key"
-            @click="btnHandle">
+            @click="() => { btnHandle(item.key) }">
             <component :is="item.title"></component>
             <template #icon>
               <n-icon size="18">
@@ -58,7 +58,7 @@ const typeList = shallowRef([
     disabled: false
   },
   {
-    title: renderLang('project.my_templete'),
+    title: renderLang('project.new_templete'),
     key: PageEnum.BASE_HOME_TEMPLATE_NAME,
     icon: ObjectStorageIcon,
     disabled: false
@@ -89,7 +89,7 @@ const btnHandle = (key: string) => {
   }
   chartEditStore.setCurCardData(null)
   const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-  
+
   routerTurnByPath(path, [id],)
 }
 </script>
@@ -121,4 +121,5 @@ $cardWidth: 570px;
       width: 100%;
     }
   }
-}</style>
+}
+</style>

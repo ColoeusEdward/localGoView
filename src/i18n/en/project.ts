@@ -6,6 +6,7 @@ export default {
   new_project: 'New Project',
   all_project: 'All Project',
   my_templete: 'My Templete',
+  new_templete: 'New Templete',
   template_market: 'Template Market',
 
   // items 
