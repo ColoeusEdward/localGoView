@@ -104,7 +104,7 @@ const saveHandle = () => {
         release: false,
         pic: picName,
         info: JSON.parse(JSON.stringify(storageInfo)),
-        isTemplate: !!pidSplit[1]
+        isTemplate: chartEditStore.getCurCardData?.isTemplate ||  !!pidSplit[1]
       }
       if(chartEditStore.getCurCardData && chartEditStore.getCurCardData.isFromTemplate){
         sdata.id = getUUID()
