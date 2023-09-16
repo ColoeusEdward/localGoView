@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
-import { fetchPathByName, routerTurnByPath, setSessionStorage } from '@/utils'
+import { fetchPathByName, getUUID, routerTurnByPath, setSessionStorage } from '@/utils'
 import { Chartype } from '../../../index.d'
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -44,12 +44,21 @@ export const useModalDataInit = () => {
     routerTurnByPath(path, [cardData.id], undefined, true)
   }
 
+  const baseFromHandle = (cardData: Chartype) => {
+    if (!cardData) return
+    let cdata = { ...cardData, isTemplate: false, isFromTemplate: true }
+    chartEditStore.setCurCardData(cdata)
+    const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
+    routerTurnByPath(path, [cdata.id], undefined, false,)
+  }
+
   return {
     modalData,
     modalShow,
     closeModal,
     resizeHandle,
     editHandle,
-    previewHandle
+    previewHandle,
+    baseFromHandle
   }
 }

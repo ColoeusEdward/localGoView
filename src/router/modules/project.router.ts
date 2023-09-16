@@ -5,7 +5,8 @@ import { PageEnum } from '@/enums/pageEnum'
 const importPath = {
   'PageEnum.BASE_HOME_NAME': () => import('@/views/project/index.vue'),
   'PageEnum.BASE_HOME_ITEMS_NAME': () => import('@/views/project/items/index.vue'),
-  'PageEnum.BASE_HOME_TEMPLATE_NAME': () => import('@/views/project/mtTemplate/index.vue'),
+  // 'PageEnum.BASE_HOME_TEMPLATE_NAME': () => import('@/views/project/mtTemplate/index.vue'),
+  'PageEnum.BASE_HOME_TEMPLATE_NAME': () => import('@/views/project/items/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME': () => import('@/views/project/templateMarket/index.vue')
 }
 

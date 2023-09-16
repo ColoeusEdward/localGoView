@@ -4,10 +4,12 @@ import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList, Chartype } from '../../..'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
 import { StorageEnum } from '@/enums/storageEnum'
-import {ChartEditStoreEnum,EditCanvasConfigEnum} from '@/store/modules/chartEditStore/chartEditStore.d'
+import { ChartEditStoreEnum, EditCanvasConfigEnum } from '@/store/modules/chartEditStore/chartEditStore.d'
+import { useRoute } from 'vue-router'
 // 数据初始化
 export const useDataListInit = () => {
   // const chartEditStore = useChartEditStore()
+  const { path } = useRoute()
   const list = ref<ChartList>([
     // {
     //   id: 1,
@@ -44,11 +46,11 @@ export const useDataListInit = () => {
   dbObjPromise.then((dbObj) => {
     let getReq = dbObj.dbObjectStore.getAll()
     getReq.onsuccess = (e: any) => {
-      const res = e.target.result
+      const res: ChartList = e.target.result
       console.log("🚀 ~ file: index.vue:69 ~ saveHandle ~ res:", res)
       if (res) {
         // 保存到本地
-        list.value = res
+        list.value = path.search('template') > -1 ? res.filter(item => item.isTemplate) : res
       }
     }
   })
@@ -71,7 +73,7 @@ export const useDataListInit = () => {
                 let val = { name: cardData.pic, path: StorageEnum.BG_PIC_PATH }
                 window.ipc.invoke('delPic', val)
                 let val2 = { fullPath: cardData.info![ChartEditStoreEnum.EDIT_CANVAS_CONFIG][EditCanvasConfigEnum.BACKGROUND_IMAGE] }
-                window.ipc.invoke('delPic', val2)
+                window.ipc.invoke('delPic', val2)   //删除背景图
               }
               resolve(res)
             })

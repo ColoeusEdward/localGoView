@@ -24,6 +24,7 @@ const global = {
   r_download: 'Download',
   r_delete: 'Delete',
   r_more: 'More',
+  r_base_from: 'Base From',
 }
 
 export default {

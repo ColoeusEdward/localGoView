@@ -80,12 +80,12 @@
 
 <script setup lang="ts">
 import { reactive, ref, PropType } from 'vue'
-import { renderIcon, renderLang, requireErrorImg} from '@/utils'
+import { renderIcon, renderLang, requireErrorImg } from '@/utils'
 import { icon } from '@/plugins'
 import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
 import { Chartype } from '../../index.d'
-import { log } from 'console'
 import { usePicUrl } from '@/hooks/usePicUrl'
+import { Template } from '@vicons/carbon'
 
 const {
   EllipsisHorizontalCircleSharpIcon,
@@ -98,18 +98,23 @@ const {
   SendIcon
 } = icon.ionicons5
 
-const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
+const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'baseFrom'])
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
 })
-const {getPreviewPicUrl} = usePicUrl()
+const { getPreviewPicUrl } = usePicUrl()
 // 处理url获取
 const requireUrl = (name: string) => {
   return new URL(`../../../../../assets/images/${name}`, import.meta.url).href
 }
 
 const fnBtnList = reactive([
+  {
+    label: renderLang('global.r_base_from'),
+    key: 'baseFrom',
+    icon: renderIcon(Template)
+  },
   {
     label: renderLang('global.r_edit'),
     key: 'edit',
@@ -153,7 +158,15 @@ const handleSelect = (key: string) => {
     case 'preview':
       previewHandle()
       break
+    case 'baseFrom':
+      baseFromHandle()
+      break
   }
+}
+
+//从模板创建处理
+const baseFromHandle = () => {
+  emit('baseFrom', props.cardData)
 }
 
 // 删除处理

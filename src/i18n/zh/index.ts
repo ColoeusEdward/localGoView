@@ -24,6 +24,7 @@ const global = {
   r_download: '下载',
   r_delete: '删除',
   r_more: '更多',
+  r_base_from: '以此为基础新建项目',
 }
 
 export default {

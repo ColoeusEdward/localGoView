@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, ref, toRaw } from 'vue'
-import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage, canvasCut2 } from '@/utils'
+import { renderIcon, goDialog, fetchPathByName, routerTurnByPath, setSessionStorage, getLocalStorage, setLocalStorage, canvasCut2,getUUID } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
 import { useRoute } from 'vue-router'
@@ -96,13 +96,18 @@ const saveHandle = () => {
 
       return useDbEdit('datav')
     }).then((dbObj) => {
+      let pidSplit = previewId.split('-')   //分割id和模板标记
       const sdata: Chartype = {
-        id: previewId,
+        id: pidSplit[0],
         title: document.title.split('-').pop() || '',
         label: '',
         release: false,
         pic: picName,
         info: JSON.parse(JSON.stringify(storageInfo)),
+        isTemplate: !!pidSplit[1]
+      }
+      if(chartEditStore.getCurCardData && chartEditStore.getCurCardData.isFromTemplate){
+        sdata.id = getUUID()
       }
       console.log("🚀 ~ file: index.vue:73 ~ saveHandle ~ sdata:", sdata)
       const dbObjectStore = dbObj?.dbObjectStore

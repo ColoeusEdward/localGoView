@@ -102,7 +102,8 @@ import {
   Carbon3DSoftware as Carbon3DSoftwareIcon,
   Filter as FilterIcon,
   FilterEdit as FilterEditIcon,
-  Laptop as LaptopIcon
+  Laptop as LaptopIcon,
+  Template as TemplateIcon
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -300,7 +301,9 @@ const carbon = {
   FilterIcon,
   FilterEditIcon,
   // 图层
-  LaptopIcon
+  LaptopIcon,
+  //从模板创建
+  TemplateIcon
 }
 
 // https://www.xicons.org/#/ 还有很多

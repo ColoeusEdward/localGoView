@@ -18,8 +18,7 @@
             :disabled="item.disabled"
             v-for="item in typeList"
             :key="item.key"
-            @click="btnHandle"
-          >
+            @click="btnHandle">
             <component :is="item.title"></component>
             <template #icon>
               <n-icon size="18">
@@ -62,7 +61,7 @@ const typeList = shallowRef([
     title: renderLang('project.my_templete'),
     key: PageEnum.BASE_HOME_TEMPLATE_NAME,
     icon: ObjectStorageIcon,
-    disabled: true
+    disabled: false
   },
   // {
   //   title: renderLang('project.template_market'),
@@ -84,10 +83,14 @@ const closeHandle = () => {
 // 处理按钮点击
 const btnHandle = (key: string) => {
   closeHandle()
-  const id = getUUID()
+  let id = getUUID()
+  if (key == PageEnum.BASE_HOME_TEMPLATE_NAME) {
+    id += `-template`
+  }
   chartEditStore.setCurCardData(null)
   const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-  routerTurnByPath(path, [id], )
+  
+  routerTurnByPath(path, [id],)
 }
 </script>
 <style lang="scss" scoped>
@@ -98,21 +101,24 @@ $cardWidth: 570px;
   top: 200px;
   left: 50%;
   transform: translateX(-50%);
+
   .card-box {
     width: $cardWidth;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0);
     @extend .go-transition;
+
     &:hover {
       @include hover-border-color('hover-border-color');
     }
+
     &-tite {
       font-size: 14px;
     }
+
     &-content {
       padding: 0px 10px;
       width: 100%;
     }
   }
-}
-</style>
+}</style>
