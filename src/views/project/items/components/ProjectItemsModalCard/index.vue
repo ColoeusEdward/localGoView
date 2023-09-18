@@ -33,7 +33,7 @@
         <n-space class="list-footer" justify="space-between">
           <n-text depth="3">
             {{ $t('project.last_edit') }}:
-            <n-time :time="new Date()" format="yyyy-MM-dd HH:mm"></n-time>
+            <n-time :time="cardData.upateTime || new Date()" format="yyyy-MM-dd HH:mm"></n-time>
           </n-text>
           <!-- 工具 -->
           <n-space>
