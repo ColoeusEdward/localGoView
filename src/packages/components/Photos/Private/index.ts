@@ -9,7 +9,7 @@ import { usePackagesStore } from '@/store/modules/packagesStore/packagesStore'
 import { useDbStore } from '@/store/modules/dbStore/dbStore'
 
 const StoreKey = StorageEnum.GO_USER_MEDIA_PHOTOS
-const {FILE_PROTOCOL_HEAD,CUSTOM_PIC_PATH} = StorageEnum
+const { FILE_PROTOCOL_HEAD, CUSTOM_PIC_PATH } = StorageEnum
 
 /**
  * 上传完成事件类型
@@ -38,9 +38,9 @@ const uploadFile = (callback: Function | null = null) => {
       return false
     }
     file.arrayBuffer().then((buffer: ArrayBuffer) => {
-      return window.ipc.invoke('savePic', { blob: buffer, name: file.name, })
+      return window.ipc.invoke('savePic', { blob: buffer, name: file.name, path: CUSTOM_PIC_PATH })
     }).then((res: any) => {
-      if(!res) return
+      if (!res) return
       const dbStore = useDbStore()
       const rootPath = dbStore.getRootPath
       const eventObj: UploadCompletedEventType = { fileName: name, url: `${FILE_PROTOCOL_HEAD}${rootPath}${CUSTOM_PIC_PATH}/${name}` }
