@@ -5,6 +5,7 @@ import { TableList } from '@/packages/components/Tables/index'
 import { PhotoList } from '@/packages/components/Photos/index'
 import { IconList } from '@/packages/components/Icons/index'
 import { PackagesCategoryEnum, PackagesType, ConfigType, FetchComFlagType } from '@/packages/index.d'
+import { StorageEnum } from '@/enums/storageEnum'
 
 const configModules: Record<string, { default: string }> = import.meta.glob('./components/**/config.vue', {
   eager: true
@@ -15,6 +16,7 @@ const indexModules: Record<string, { default: string }> = import.meta.glob('./co
 const imagesModules: Record<string, { default: string }> = import.meta.glob('../assets/images/chart/**', {
   eager: true
 })
+const { FILE_PROTOCOL_HEAD } = StorageEnum
 
 // * 所有图表
 export let packagesList: PackagesType = {
@@ -81,8 +83,10 @@ export const fetchConfigComponent = (dropData: ConfigType) => {
  */
 export const fetchImages = async (targetData?: ConfigType) => {
   if (!targetData) return ''
+  //判断是否为自定义文件协议
+  if (targetData.image.search(FILE_PROTOCOL_HEAD) > -1) return targetData.image
   // 正则判断图片是否为 url，是则直接返回该 url
-  if (/^(http|https):\/\/([\w.]+\/?)\S*/.test(targetData.image)) return targetData.image
+  if (/^(http|https|):\/\/([\w.]+\/?)\S*/.test(targetData.image)) return targetData.image
   // 新数据动态处理
   const { image, package: targetDataPackage } = targetData
   // 兼容旧数据
