@@ -12,6 +12,7 @@
           @delete="deleteHandle($event, index)"
           @edit="editHandle"
           @baseFrom="baseFromHandle"
+          @send="sendHandle"
           @preview="previewHandle"></project-items-card>
       </n-grid-item>
     </n-grid>
@@ -39,7 +40,7 @@ import { useDataListInit } from './hooks/useData.hook'
 
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
 const { list, deleteHandle } = useDataListInit()
-const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle, baseFromHandle } = useModalDataInit()
+const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle, baseFromHandle,sendHandle } = useModalDataInit(list)
 </script>
 
 <style lang="scss" scoped>

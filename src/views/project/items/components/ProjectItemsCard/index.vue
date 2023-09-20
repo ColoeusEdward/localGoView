@@ -31,7 +31,7 @@
           <div class="go-flex-items-center list-footer-ri">
             <n-space>
               <n-text>
-                <!-- <n-badge
+                <n-badge
                   class="go-animation-twinkle"
                   dot
                   :color="cardData.release ? '#34c749' : '#fcbc40'"></n-badge>
@@ -39,7 +39,7 @@
                   cardData.release
                   ? $t('project.release')
                   : $t('project.unreleased')
-                }} -->
+                }}
               </n-text>
 
               <template v-for="item in fnBtnList" :key="item.key">
@@ -99,7 +99,7 @@ const {
   SendIcon
 } = icon.ionicons5
 
-const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'baseFrom'])
+const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'baseFrom','send'])
 const { path } = useRoute()
 
 const props = defineProps({
@@ -136,13 +136,13 @@ const selectOptions = ref([
     key: 'preview',
     icon: renderIcon(BrowsersOutlineIcon)
   },
-  // {
-  //   label: props.cardData?.release
-  //     ? renderLang('global.r_unpublish')
-  //     : renderLang('global.r_publish'),
-  //   key: 'send',
-  //   icon: renderIcon(SendIcon)
-  // },
+  {
+    label: props.cardData?.release
+      ? renderLang('global.r_unpublish')
+      : renderLang('global.r_publish'),
+    key: 'send',
+    icon: renderIcon(SendIcon)
+  },
   {
     label: renderLang('global.r_delete'),
     key: 'delete',
@@ -163,8 +163,15 @@ const handleSelect = (key: string) => {
       break
     case 'baseFrom':
       baseFromHandle()
+    case 'send':
+      sendHandle()
       break
   }
+}
+
+//从模板创建处理
+const sendHandle = () => {
+  emit('send', props.cardData)
 }
 
 //从模板创建处理

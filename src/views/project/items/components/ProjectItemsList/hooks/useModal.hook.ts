@@ -1,14 +1,16 @@
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
 import { fetchPathByName, getUUID, routerTurnByPath, setSessionStorage } from '@/utils'
-import { Chartype } from '../../../index.d'
+import { ChartList, Chartype } from '../../../index.d'
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { StorageEnum } from '@/enums/storageEnum'
+import { useDbStore } from '@/store/modules/dbStore/dbStore'
+import { useDbEdit } from '@/hooks/useDbEdit.hook'
 
 const chartEditStore = useChartEditStore()
 
-export const useModalDataInit = () => {
+export const useModalDataInit = (list?:Ref<ChartList>) => {
   const modalShow = ref<boolean>(false)
   const modalData = ref<Chartype | null>(null)
 
@@ -52,6 +54,23 @@ export const useModalDataInit = () => {
     routerTurnByPath(path, [cdata.id], undefined, false,)
   }
 
+  const sendHandle = (cardData: Chartype) => {
+    if (!cardData) return
+    useDbEdit('datav').then(({ dbObjectStore, dbOverPromise }) => {
+      list?.value.forEach((item) => {
+        if(item.id == cardData.id) return
+        item.release = false
+        dbObjectStore.put(item)
+      })
+      cardData.release = true
+      dbObjectStore.put(cardData)
+      dbOverPromise?.then(() => {
+        window['$message'].success('发布成功')
+      })
+    })
+
+  }
+
   return {
     modalData,
     modalShow,
@@ -59,6 +78,6 @@ export const useModalDataInit = () => {
     resizeHandle,
     editHandle,
     previewHandle,
-    baseFromHandle
+    baseFromHandle, sendHandle
   }
 }
