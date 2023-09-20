@@ -29,4 +29,8 @@ export enum StorageEnum {
   BG_PIC_PATH = '/resource/pic/bg',
   //custom pic file path
   CUSTOM_PIC_PATH = '/resource/pic/custom',
+
+  //发布localstorage key
+  PUBLISH_PROJECT_KEY = 'publishProject',
+
 }

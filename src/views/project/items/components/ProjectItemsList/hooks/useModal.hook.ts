@@ -1,6 +1,6 @@
 import { Ref, ref } from 'vue'
 import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
-import { fetchPathByName, getUUID, hardCloneObj, routerTurnByPath, setSessionStorage } from '@/utils'
+import { fetchPathByName, getUUID, hardCloneObj, routerTurnByPath, setLocalStorage, setSessionStorage } from '@/utils'
 import { ChartList, Chartype } from '../../../index.d'
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -9,6 +9,7 @@ import { useDbStore } from '@/store/modules/dbStore/dbStore'
 import { useDbEdit } from '@/hooks/useDbEdit.hook'
 
 const chartEditStore = useChartEditStore()
+const {PUBLISH_PROJECT_KEY} = StorageEnum
 
 export const useModalDataInit = (list?: Ref<ChartList>) => {
   const modalShow = ref<boolean>(false)
@@ -64,6 +65,7 @@ export const useModalDataInit = (list?: Ref<ChartList>) => {
       })
       cardData.release = true
       dbObjectStore.put(hardCloneObj(cardData))
+      setLocalStorage(PUBLISH_PROJECT_KEY,cardData.id)
       dbOverPromise?.then(() => {
         window['$message'].success('发布成功')
       })

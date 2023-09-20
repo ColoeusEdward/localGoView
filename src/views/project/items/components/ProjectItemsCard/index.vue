@@ -30,7 +30,7 @@
           <!-- 工具 -->
           <div class="go-flex-items-center list-footer-ri">
             <n-space>
-              <n-text>
+              <n-text v-if="path.search('template') == -1" >
                 <n-badge
                   class="go-animation-twinkle"
                   dot
