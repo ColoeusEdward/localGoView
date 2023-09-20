@@ -137,9 +137,10 @@ const selectOptions = ref([
     icon: renderIcon(BrowsersOutlineIcon)
   },
   {
-    label: props.cardData?.release
-      ? renderLang('global.r_unpublish')
-      : renderLang('global.r_publish'),
+    // label: props.cardData?.release
+    //   ? renderLang('global.r_unpublish')
+    //   : renderLang('global.r_publish'),
+    label: renderLang('global.r_publish'),
     key: 'send',
     icon: renderIcon(SendIcon)
   },
@@ -169,7 +170,7 @@ const handleSelect = (key: string) => {
   }
 }
 
-//从模板创建处理
+//发布处理
 const sendHandle = () => {
   emit('send', props.cardData)
 }

@@ -44,6 +44,7 @@ dbStore.initDb().then((db: any) => {
   }
 })
 
+  console.log("🚀 ~ file: App.vue:48 ~ window.ipc:", window.ipc)
 if (window.ipc) {
   console.log("🚀 ~ file: index.tsx:12 ~ window.ipc.invoke ~ res:")
   window.ipc.invoke('getRootPath').then((res: string) => {

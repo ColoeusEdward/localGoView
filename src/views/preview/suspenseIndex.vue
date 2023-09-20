@@ -42,12 +42,15 @@ import { useRoute } from 'vue-router'
 
 // const { query } = useRoute()
 
-// const { getIndexedStorageInfo } = useIndexedStorageInfo()
+const { getIndexedStorageInfo } = useIndexedStorageInfo()
 // let prePageMark = query.prePageMark?.toString() || ''
-await getSessionStorageInfo()
+let res = await getSessionStorageInfo()
+if(!res){
+  await getIndexedStorageInfo()
+}
 // console.log("🚀 ~ file: suspenseIndex.vue:47 ~ prePageMark:", prePageMark)
 // if (prePageMark.search('project') > -1) {
-//   await getIndexedStorageInfo()
+//   
 // } else {
 // }
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
