@@ -1,6 +1,6 @@
 import { Ref, ref } from 'vue'
 import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
-import { fetchPathByName, getUUID, routerTurnByPath, setSessionStorage } from '@/utils'
+import { fetchPathByName, getUUID, hardCloneObj, routerTurnByPath, setSessionStorage } from '@/utils'
 import { ChartList, Chartype } from '../../../index.d'
 import { useIndexedStorageInfo } from '@/hooks/useIndexedStorageInfo'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -10,7 +10,7 @@ import { useDbEdit } from '@/hooks/useDbEdit.hook'
 
 const chartEditStore = useChartEditStore()
 
-export const useModalDataInit = (list?:Ref<ChartList>) => {
+export const useModalDataInit = (list?: Ref<ChartList>) => {
   const modalShow = ref<boolean>(false)
   const modalData = ref<Chartype | null>(null)
 
@@ -58,12 +58,12 @@ export const useModalDataInit = (list?:Ref<ChartList>) => {
     if (!cardData) return
     useDbEdit('datav').then(({ dbObjectStore, dbOverPromise }) => {
       list?.value.forEach((item) => {
-        if(item.id == cardData.id) return
+        if (item.id == cardData.id) return
         item.release = false
-        dbObjectStore.put(item)
+        dbObjectStore.put(hardCloneObj(item))
       })
       cardData.release = true
-      dbObjectStore.put(cardData)
+      dbObjectStore.put(hardCloneObj(cardData))
       dbOverPromise?.then(() => {
         window['$message'].success('发布成功')
       })

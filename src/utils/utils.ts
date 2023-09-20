@@ -389,3 +389,7 @@ export const  getHashId = () => {
   return toPathArray && toPathArray[toPathArray.length - 1]
 }
 
+export const hardCloneObj = (obj:object) => {
+  return JSON.parse(JSON.stringify(obj))
+}
+
